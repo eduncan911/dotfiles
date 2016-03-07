@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo openvpn --config /home/eric/.openvpn/triggit.ovpn --writepid /var/run/openvpn.triggit.pid --log /var/log/openvpn.log &
+

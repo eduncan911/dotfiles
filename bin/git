@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# nice trick to set the name and email dynamically for git
+# http://stackoverflow.com/questions/13750953/is-it-possible-to-configure-user-name-and-user-email-per-wildcard-domains-in-gi
+
+# "Real" git is the second one returned by 'which'
+REAL_GIT=$(which -a git | sed -n 2p)
+
+# Does the remote "origin" point to g4.github.com?
+if ("$REAL_GIT" remote -v 2>/dev/null |
+    grep '^origin\b.*g4.github.com.*(push)$' >/dev/null 2>&1); then
+
+    export GIT_AUTHOR_NAME='Eric Duncan'
+    export GIT_AUTHOR_EMAIL='eric@gravity4.com'
+    echo "GIT: changed identity to eric@gravity4.com\n"
+
+fi
+
+"$REAL_GIT" "$@"
