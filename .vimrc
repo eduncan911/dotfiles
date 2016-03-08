@@ -13,12 +13,18 @@ set tabstop=4
 set shiftwidth=4
 set directory^=~/.vim/swp//
 set number
+set noshowmode
+
+" improve searching
+set incsearch
+set hlsearch
+nnoremap <CR> :nohlsearch<Bar>:echo<CR>
 
 " overriding sensible settings
 let g:netrw_liststyle=3
 
 " IDE-like intellisense
-set completeopt=longest,menuone,preview
+set completeopt=longest,menuone
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : 
 			\ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
@@ -46,8 +52,7 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 "  return neocomplete#close_popup() . "\<CR>"
 "endfunction
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
