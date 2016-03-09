@@ -24,7 +24,7 @@ nnoremap <CR> :nohlsearch<Bar>:echo<CR>
 let g:netrw_liststyle=3
 
 " IDE-like intellisense
-set completeopt=longest,menuone
+set completeopt=longest,menuone,preview
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : 
 			\ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
