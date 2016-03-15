@@ -22,9 +22,12 @@ nnoremap <CR> :nohlsearch<Bar>:echo<CR>
 
 " overriding sensible settings
 let g:netrw_liststyle=3
+let g:netrw_winsize=20
+let g:netrw_browse_split=4
+let g:netrw_banner=0
 
 " IDE-like intellisense
-set completeopt=longest,menuone,preview
+set completeopt=longest,menuone
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : 
 			\ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
@@ -105,6 +108,36 @@ let g:go_highlight_structs = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1  
 let g:go_highlight_build_constraints = 1
+
+" ctags
+let g:tagbar_type_go = {  
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+nmap <F8> :TagbarToggle<CR>
 
 " fixing 256 colors in tmux
 "set term=xterm-256color
