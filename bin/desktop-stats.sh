@@ -39,7 +39,6 @@ if [ -n "$VIM_SWAPS" ]; then
 fi
 
 # istats
-/usr/local/bin/istats cpu
 /usr/local/bin/istats extra
 /usr/local/bin/istats fan speed
 echo 
