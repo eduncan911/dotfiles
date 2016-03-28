@@ -38,7 +38,7 @@ HISTFILE=~/.bash_history_unlimited
 LC_COLLATE="C"; export LC_COLLATE
 
 # default editor
-EDITOR=vim; export EDITOR
+EDITOR=nvim; export EDITOR
 
 # homebrew api token
 [[ -s "$HOME/.profile.private" ]] && source "$HOME/.profile.private"
