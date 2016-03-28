@@ -2,4 +2,6 @@ session
 tmp
 swp
 .netrwhist
-bundle/**
+autoload/**
+plugged/**
+.init.vim-rplugin~
