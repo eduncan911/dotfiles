@@ -4,4 +4,5 @@ swp
 .netrwhist
 autoload/**
 plugged/**
+view/**
 .init.vim-rplugin~

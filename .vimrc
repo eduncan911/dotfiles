@@ -6,6 +6,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
+let g:plug_timeout=120
 call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-obsession' 
@@ -13,19 +14,18 @@ call plug#begin('~/.vim/plugged')
   Plug 'scrooloose/syntastic'
   Plug 'majutsushi/tagbar'
   Plug 'airblade/vim-gitgutter'
+  Plug 'vim-scripts/scratch.vim'
   Plug 'vim-airline/vim-airline' 
     \ | Plug 'edkolev/tmuxline.vim'
     \ | Plug 'vim-airline/vim-airline-themes'
     \ | Plug 'altercation/vim-colors-solarized'
 
   " dev plugins
-  "Plug 'fatih/vim-go', { 'for' : 'go', 'do' : [':GoUpdateBinaries', 'gometalinter --install --update'] }
-  Plug 'fatih/vim-go', { 'for' : 'go' }
+  Plug 'fatih/vim-go', { 'do' : 'vim +GoUpdateBinaries +qall && gometalinter --install --update' }
 
   " neovim specific plugins
   if has('nvim')
-    "Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' } 
-    Plug 'Shougo/deoplete.nvim'
+    Plug 'Shougo/deoplete.nvim', { 'do' : 'vim +UpdateRemotePlugins +qall' }
       \ | Plug 'zchee/deoplete-go', { 'do' : 'make'}
   else
     Plug 'Shougo/neocomplete.vim'
@@ -37,24 +37,31 @@ set hidden
 set wrap
 set linebreak
 set formatoptions-=t
-set tabstop=4
-set shiftwidth=4
 set directory^=~/.vim/swp//
 set number
 set noshowmode
 set mouse=r
-set timeoutlen=50 
-set ttimeoutlen=0
+"set timeoutlen=50 
+"set ttimeoutlen=0
+let mapleader='\'
 let g:netrw_liststyle=3
 let g:netrw_winsize=20
 let g:netrw_browse_split=4
 let g:netrw_banner=0
 map <C-J> :bprev<CR>
 map <C-K> :bnext<CR>
+"map <C-j> <C-w>j
+"map <C-k> <C-w>k
+"map <C-l> <C-w>l
+"map <C-h> <C-w>h
+map <Tab><Tab> <C-W>w
+nmap <leader>pp :set paste!<CR>
 
 " improve searching
-set incsearch
-set hlsearch
+set incsearch   " show search matches as you type
+set hlsearch    " highlight search results
+set ignorecase  " case insensative search
+set smartcase   " if a capital letter is included in search, make it case-sensitive
 nnoremap <CR> :nohlsearch<Bar>:echo<CR>
 
 " IDE-like intellisense
@@ -63,67 +70,146 @@ nnoremap <CR> :nohlsearch<Bar>:echo<CR>
 "inoremap <expr> <C-n> pumvisible() ? '<C-n>' : 
 "			\ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 "inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-			\ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+"			\ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
-" ctags
-let g:tagbar_type_go = {  
-  \ 'ctagstype' : 'go',
-  \ 'kinds'     : [
-    \ 'p:package',
-    \ 'i:imports:1',
-    \ 'c:constants',
-    \ 'v:variables',
-    \ 't:types',
-    \ 'n:interfaces',
-    \ 'w:fields',
-    \ 'e:embedded',
-    \ 'm:methods',
-    \ 'r:constructor',
-    \ 'f:functions'
-  \ ],
-  \ 'sro' : '.',
-  \ 'kind2scope' : {
-    \ 't' : 'ctype',
-    \ 'n' : 'ntype'
-  \ },
-  \ 'scope2kind' : {
-    \ 'ctype' : 't',
-    \ 'ntype' : 'n'
-  \ },
-  \ 'ctagsbin'  : 'gotags',
-  \ 'ctagsargs' : '-sort -silent'
-\ }
-nmap <F8> :TagbarToggle<CR>
-
-" fixing 256 colors in tmux
-"set term=xterm-256color
-set t_Co=256                        " force vim to use 256 colors
-
-" fixing Background Color Erase when term is set to non-xterm
-if &term =~ '256color'
-  " disable Background Color Erase (BCE) so that color schemes
-  " render properly when inside 256-color tmux and GNU screen.
-  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-  set t_ut=
-else
-  " switch to fallback mode when there xterm-256color isn't detected
-  " (e.g. gnome's Drop Down Shell extension)
-"  let g:solarized_termcolors=256
-endif
-
-" solarized theme
-set background=dark
-colorscheme solarized
 
 " SuperTab
 "let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 "let g:SuperTabDefaultCompletionType = "context"
+
+function! s:on_load(name, exec) 
+  if has_key(g:plugs[a:name], 'on') || has_key(g:plugs[a:name], 'for')
+    execute 'autocmd! User' a:name a:exec
+  else
+    execute 'autocmd VimEnter *' a:exec
+  aendif
+endfunction
+
+function! CraigSetup()
+  " sourced: http://blog.mojotech.com/a-veterans-vimrc/
+
+  " os x backspace fix
+  set backspace=indent,eol,start
+  set modelines=0   " dont need modelines and the potential security hazard
+
+  " show trailing whitespace chars
+  "set list
+  set listchars=tab:>-,trail:.,extends:#,nbsp:.
+
+  " default history is only 20
+  set history=100
+  set undolevels=100
+
+  " tab -> spaces
+  set expandtab
+  set tabstop=2       " a tab is 4 spaces
+  set softtabstop=2   " tab size when insterting/pasting
+  set shiftwidth=2    " number of spaces to use for autoindenting
+  set shiftround      " use multiple of shiftwidth when indenting with '<' and '>'
+  set smarttab        " insert tabs on the start of a line according to shiftwidth, not tabstop
+
+  set autoindent " always set autoindenting on
+  set copyindent " copy the previous indentation on autoindenting
+
+  " set foldenable      " fold by default
+  set nofoldenable      " dont fold by default
+  set foldmethod=indent " fold based on indentation
+  set foldnestmax=10    " deepest fold is 10 levels
+  set foldlevel=1
+
+  set scrolloff=4
+
+  set shortmess=tWI
+
+  set visualbell    " don't beep
+  set noerrorbells  " don't beep
+
+  set autoread " Auto read when a file is changed on disk
+
+  nnoremap / /v
+  vnoremap / /v
+
+  " Turn on spell check for certain filetypes automatically
+  autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
+  autocmd BufRead,BufNewFile *.markdown setlocal spell spelllang=en_us
+  autocmd BufRead,BufNewFile *.txt setlocal spell spelllang=en_us
+  autocmd FileType gitcommit setlocal spell spelllang=en_us
+
+  " Autowrap text to 80 chars for certain filetypes
+  autocmd BufRead,BufNewFile *.md setlocal textwidth=80
+  autocmd BufRead,BufNewFile *.txt setlocal textwidth=80
+  autocmd FileType gitcommit setlocal textwidth=80
+endfunction
+
+" toggle scratch buffer (scratch.vim plugin)
+function! ToggleScratch()
+  if expand('%') == g:ScratchBufferName
+    quit
+  else
+    Sscratch
+  endif
+endfunction
+map <leader>ss :call ToggleScratch()<CR>
+
+function! ColorSchemeSetup()
+  " term color support
+  if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
+    set t_Co=256
+    " disable Background Color Erase (BCE) so that color schemes
+    " render properly when inside 256-color tmux and GNU screen.
+    " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+  endif
+
+  " fixing 256 colors in tmux
+  set t_Co=256                        " force vim to use 256 colors
+
+  " solarized theme
+  set background=dark
+  colorscheme solarized
+endfunction
+
+function! TagbarSetup()
+  nmap <F8> :TagbarToggle<CR>
+  " ctags
+  let g:tagbar_type_go = {  
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+      \ 'p:package',
+      \ 'i:imports:1',
+      \ 'c:constants',
+      \ 'v:variables',
+      \ 't:types',
+      \ 'n:interfaces',
+      \ 'w:fields',
+      \ 'e:embedded',
+      \ 'm:methods',
+      \ 'r:constructor',
+      \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+      \ 't' : 'ctype',
+      \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+      \ 'ctype' : 't',
+      \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+  \ }
+endfunction
 
 function! SyntasticSetup()
   let g:syntastic_always_populate_loc_list = 1
   let g:syntastic_auto_loc_list = 0 " use :lopen / :lclose to open/show
   let g:syntastic_check_on_open = 1
   let g:syntastic_check_on_wq = 0
+
+  " vim-go fixes
+  let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+  let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 endfunction
 
 function! AirlineSetup()
@@ -140,28 +226,48 @@ endfunction
 
 function! VimGoSetup()
   " vim-go related mappings
-  au FileType go nmap <Leader>i <Plug>(go-info)
-  au FileType go nmap <Leader>gd <Plug>(go-doc)
   au FileType go nmap <Leader>r <Plug>(go-run)
   au FileType go nmap <Leader>b <Plug>(go-build)
   au FileType go nmap <Leader>t <Plug>(go-test)
-  au FileType go nmap gd <Plug>(go-def-tab)
+  au FileType go nmap <Leader>i <Plug>(go-info)
+  au FileType go nmap <Leader>s <Plug>(go-implements)
+  au FileType go nmap <Leader>c <Plug>(go-coverage)
+  au FileType go nmap <Leader>e <Plug>(go-rename)
+  au FileType go nmap <Leader>gi <Plug>(go-imports)
+  au FileType go nmap <Leader>gI <Plug>(go-install)
+  au FileType go nmap <Leader>gd <Plug>(go-doc)
+  au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+  au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+  au FileType go nmap <Leader>ds <Plug>(go-def-split)
+  au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+  au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+  let g:go_auto_type_info = 1
+  let g:go_fmt_command = "gofmt"
+  let g:go_fmt_experimental = 1
+  let g:go_dispatch_enabled = 0	" vim-dispatch needed
+  let g:go_metalinter_autosave = 1
+  let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+  let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+  let g:go_term_enabled = 0
+  let g:go_term_mode = "vertical"
   let g:go_highlight_functions = 1
   let g:go_highlight_methods = 1
   let g:go_highlight_structs = 1
   let g:go_highlight_interfaces = 1
   let g:go_highlight_operators = 1
-  let g:go_highlight_build_constraints = 1  
+  let g:go_highlight_extra_types = 1
+  let g:go_highlight_build_constraints = 1
+  let g:go_highlight_chan_whitespace_error = 1
 endfunction
 
 function! DeopleteSetup()
   " deoplete.vim
   " commands: https://github.com/Shougo/deoplete.nvim
   let g:deoplete#enable_at_startup = 1
-  set completeopt+=longest
+  "set completeopt+=longest
   set completeopt+=menuone
   set completeopt+=noinsert
-  "set completeopt-=preview
+  set completeopt-=preview
   let g:deoplete#enable_ignore_case = 'ignorecase'
   "let g:deoplete#auto_completion_start_length = 0
   let g:min_pattern_length = 0
@@ -179,22 +285,9 @@ function! DeopleteSetup()
   let g:deoplete#omni#input_patterns.javascript = '[^. \t]\.\%(\h\w*\)\?'
   let g:deoplete#omni#input_patterns.go = '[^.[:digit:] *\t]\.\w*'
   let g:deoplete#omni#input_patterns.ruby = ['[^. *\t]\.\w*', '\h\w*::']
-
-  "if !exists('g:spf13_no_neosnippet_expand')
-  "  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  "  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  "  xmap <C-k> <Plug>(neosnippet_expand_target)
-  "  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  "  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-  "  " For conceal markers.
-  "  if has('conceal')
-  "    set conceallevel=2 concealcursor=niv
-  "  endif
-  "endif
-
   let g:deoplete#ignore_sources = {}
   let g:deoplete#ignore_sources._ = ['buffer', 'vim', 'member']
+
   let g:deoplete#sources#go = 'vim-go'
   let g:deoplete#sources#go#align_class = 1
 
@@ -226,7 +319,7 @@ function! NeocompleteSetup()
 
   let g:neocomplete#data_directory = '~/.vim/tmp/neocomplete'
   let g:neocomplete#sources#tags#cache_limit_size = 16777216 " 16MB
- 
+
   " fuzzy completion breaks dot-repeat more noticeably
   " https://github.com/Shougo/neocomplete.vim/issues/332
   let g:neocomplete#enable_fuzzy_completion = 0
@@ -242,3 +335,6 @@ call AirlineSetup()
 call SyntasticSetup()
 call VimGoSetup()
 call DeopleteSetup()
+call TagbarSetup()
+call ColorSchemeSetup()
+call CraigSetup()
