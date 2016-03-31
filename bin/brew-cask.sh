@@ -15,7 +15,7 @@
 # the "unusual step" being, --force install of the updated cask.
 #
 # Installation: 
-#  $ curl http://goo.gl/UIEUIl --create-dirs -o ~/bin/brew-cask
+#  $ curl -L http://goo.gl/UIEUIl --create-dirs -o ~/bin/brew-cask
 #  $ chmod 755 bin/brew-cask
 #
 # Usage:
@@ -34,9 +34,9 @@
 #    This performs a "brew cask install <cask> --force" of all cask packages that have
 #    an update pending.
 #
+# This code was inspired by http://stackoverflow.com/a/36000907/56693
 
-
-
+# get the list of installed casks
 casks=( $(brew cask list) )
 
 for cask in ${casks[@]}
