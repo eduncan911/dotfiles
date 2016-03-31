@@ -16,7 +16,7 @@ if [[ -d "$HOME/.virtualenvs" ]]; then
 fi
 
 # GNU coreutils and more, overriding OS X natives
-PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:/usr/local/sbin:$PATH"
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # GO stuff
