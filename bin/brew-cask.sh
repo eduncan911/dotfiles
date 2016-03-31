@@ -15,7 +15,7 @@
 # the "unusual step" being, --force install of the updated cask.
 #
 # Installation: 
-#  $ curl -L goo.gl/KKZdZf --create-dirs -o ~/bin/brew-cask.sh
+#  $ curl -L http://goo.gl/KKZdZf --create-dirs -o ~/bin/brew-cask.sh
 #  $ chmod 755 bin/brew-cask
 #
 # Usage:
