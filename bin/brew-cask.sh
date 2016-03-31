@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# brew-cask
-# source: https://github.com/eduncan911/dotfiles/blob/master/bin/brew-cask
-# author: eduncan911.github.io
+# brew-cask.sh
+# latest source: https://github.com/eduncan911/dotfiles/blob/master/bin/brew-cask.sh
+# author: https://eduncan911.github.io
 #
 # a simple utility to list homebrew CASK packages that have
 # been updated, and also provide a way to force upgrade of
@@ -15,7 +15,7 @@
 # the "unusual step" being, --force install of the updated cask.
 #
 # Installation: 
-#  $ curl -L http://goo.gl/UIEUIl --create-dirs -o ~/bin/brew-cask
+#  $ curl -L goo.gl/KKZdZf --create-dirs -o ~/bin/brew-cask.sh
 #  $ chmod 755 bin/brew-cask
 #
 # Usage:
