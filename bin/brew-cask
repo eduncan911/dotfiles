@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# brew-cask
+# source: https://github.com/eduncan911/dotfiles/blob/master/bin/brew-cask
+# author: eduncan911.github.io
+#
+# a simple utility to list homebrew CASK packages that have
+# been updated, and also provide a way to force upgrade of
+# those packages.
+#
+# cask does not have a proper upgrade path for packages like 
+# Linux OS package managers have.  therefore, we have to take 
+# unusual steps to upgrade packages that are managed by cask.
+#
+# the "unusual step" being, --force install of the updated cask.
+#
+# Installation: 
+#  $ curl http://goo.gl/UIEUIl --create-dirs -o ~/bin/brew-cask
+#  $ chmod 755 bin/brew-cask
+#
+# Usage:
+#
+#  $ brew update
+#    You should execute this first to update everything locally.
+#
+#  $ brew-cask [update]
+#    This will list all of your cask packages and rather there is an upgrade
+#    pending with a green ✔ checkmark, just like Homebrew does with "brew update".
+#    The update command is optional, as it doesn't actually do any tracking, there's
+#    not really anything to "update" with cask.  But it keeps with the pattern of
+#    of Homebrew's "brew update" pattern for those with memory muscle fingers (like me).
+#
+#  $ brew-cask upgrade
+#    This performs a "brew cask install <cask> --force" of all cask packages that have
+#    an update pending.
+#
+
+
+
+casks=( $(brew cask list) )
+
+for cask in ${casks[@]}
+do
+    # in the first line there is version
+    current="$(brew cask info $cask | sed -n '1p' | sed -n 's/^.*: \(.*\)$/\1/p')"
+
+    installed=( $(ls /opt/homebrew-cask/Caskroom/$cask))
+    if (! [[ " ${installed[@]} " == *" $current "* ]]); then
+        (set -x; brew cask install $cask --force;)
+    fi
+done
+
