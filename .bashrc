@@ -119,7 +119,7 @@ function __prompt_command {
   
   PROMPT_COMMAND='__git_ps1 \
 "`err=\$?; if [[ $err -ne "0" ]]; then echo $__PROMPT_COLOR_ERROR"\n└─────("$err")─────┘"$__PROMPT_COLOR_RESET"\n"; fi`\
-\n$__PROMPT_COLOR_NORMAL[$__PROMPT_COLOR_TEXT\u@\h$__PROMPT_COLOR_NORMAL][$__PROMPT_COLOR_TEXT\w$__PROMPT_COLOR_NORMAL]$__PROMPT_COLOR_RESET" \
+$__PROMPT_COLOR_NORMAL[$__PROMPT_COLOR_TEXT\u@\h$__PROMPT_COLOR_NORMAL][$__PROMPT_COLOR_TEXT\w$__PROMPT_COLOR_NORMAL]$__PROMPT_COLOR_RESET" \
 "$(__prompt_rbenv_info)$(__prompt_virtualenv_info)\n$__PROMPT_COLOR_NORMAL$__PROMPT_COLOR_TEXT\$$__PROMPT_COLOR_RESET " \
 "$__PROMPT_COLOR_NORMAL[$__PROMPT_COLOR_RESET%s$__PROMPT_COLOR_NORMAL]$__PROMPT_COLOR_RESET";\
 #"$(__prompt_get_dir)";\
