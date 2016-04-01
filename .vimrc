@@ -33,21 +33,34 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 " overriding sensible settings
+let mapleader='\'
+set clipboard=unnamed
 set hidden
 set wrap
 set linebreak
-set formatoptions-=t
-set directory^=~/.vim/swp//
-set number
-set noshowmode
-set mouse=r
-"set timeoutlen=50 
+set formatoptions-=t        " 
+set directory^=~/.vim/swp// " put all swap files here
+set number                  " line numbers
+set noshowmode              " hide the status line's "-- INSERT --"
+"set timeoutlen=50
 "set ttimeoutlen=0
-let mapleader='\'
+
+" cursor and mouse
+set mouse=a  " allow mouse to change cursor/select lines (use r to disable it)
+set cursorline     " highlight the cursor's line
+"set cursorcolumn  " highlight the cursor's column
+
+" Explorer
 let g:netrw_liststyle=3
-let g:netrw_winsize=20
+let g:netrw_winsize=20      " percentage of window size when opened
+let g:netrw_banner=0        " clean up the window
 let g:netrw_browse_split=4
-let g:netrw_banner=0
+
+" highlighting and marking
+nnoremap <silent> <Leader>ll ml:execute 'match Search /\%'.line('.').'l/'<CR>
+nnoremap <silent> <Leader><CR> :call clearmatches()<CR>
+
+" navigation
 map <C-J> :bprev<CR>
 map <C-K> :bnext<CR>
 "map <C-j> <C-w>j
@@ -55,27 +68,35 @@ map <C-K> :bnext<CR>
 "map <C-l> <C-w>l
 "map <C-h> <C-w>h
 map <Tab><Tab> <C-W>w
+imap <Tab><Tab> <Esc><C-W>w
 nmap <leader>pp :set paste!<CR>
 
-" improve searching
+" clipboard sharing
+set clipboard=unnamed
+nmap <C-C> :.w !pbcopy<CR><CR>
+vmap <C-C> :w !pbcopy<CR><CR>
+nmap <C-V> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+imap <C-V> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+
+" searching
 set incsearch   " show search matches as you type
 set hlsearch    " highlight search results
 set ignorecase  " case insensative search
 set smartcase   " if a capital letter is included in search, make it case-sensitive
 nnoremap <CR> :nohlsearch<Bar>:echo<CR>
 
-" IDE-like intellisense
+" fixing scrolling issues with syntax highlighting
+syntax sync minlines=256
+set synmaxcol=128
+set lazyredraw
+
+" ide-like intellisense
 "set completeopt=longest,menuone
 "inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 "inoremap <expr> <C-n> pumvisible() ? '<C-n>' : 
 "			\ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 "inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 "			\ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-
-" SuperTab
-"let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-"let g:SuperTabDefaultCompletionType = "context"
 
 function! s:on_load(name, exec) 
   if has_key(g:plugs[a:name], 'on') || has_key(g:plugs[a:name], 'for')
@@ -124,9 +145,10 @@ function! CraigSetup()
   set visualbell    " don't beep
   set noerrorbells  " don't beep
 
-  set autoread " Auto read when a file is changed on disk
+  set autoread      " Auto read when a file is changed on disk
 
-  nnoremap / /v
+  " get around vim's funky regex and use normal regex
+  nnoremap / /v     
   vnoremap / /v
 
   " Turn on spell check for certain filetypes automatically
@@ -137,6 +159,7 @@ function! CraigSetup()
 
   " Autowrap text to 80 chars for certain filetypes
   autocmd BufRead,BufNewFile *.md setlocal textwidth=80
+  autocmd BufRead,BufNewFile *.markdown setlocal textwidth=80
   autocmd BufRead,BufNewFile *.txt setlocal textwidth=80
   autocmd FileType gitcommit setlocal textwidth=80
 endfunction
