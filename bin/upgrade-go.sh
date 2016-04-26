@@ -6,6 +6,7 @@ go get -v -u golang.org/x/tools/cmd/gorename
 go get -v -u github.com/golang/lint/golint
 go get -v -u github.com/redefiance/go-find-references
 go get -v -u github.com/jstemmer/gotags
+go get -v -u github.com/client9/misspell/cmd/misspell
 
 echo "Upgrading vim-go binaries ..."
 vim +GoUpdateBinaries +qall
