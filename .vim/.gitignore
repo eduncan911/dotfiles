@@ -5,4 +5,5 @@ swp
 autoload/**
 plugged/**
 view/**
+undodir/**
 .init.vim-rplugin~
