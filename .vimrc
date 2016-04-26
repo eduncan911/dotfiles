@@ -9,19 +9,31 @@ endif
 let g:plug_timeout=120
 call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-sensible'
-  Plug 'tpope/vim-obsession' 
+  Plug 'tpope/vim-obsession'
     \ | Plug 'dhruvasagar/vim-prosession'
   Plug 'scrooloose/syntastic'
   Plug 'majutsushi/tagbar'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'vim-scripts/scratch.vim'
-  Plug 'vim-airline/vim-airline' 
+  Plug 'airblade/vim-gitgutter' 
+  Plug 'vim-scripts/scratch.vim'                " <Leader>ss for scratch window
+  Plug 'vim-airline/vim-airline'
     \ | Plug 'edkolev/tmuxline.vim'
     \ | Plug 'vim-airline/vim-airline-themes'
     \ | Plug 'altercation/vim-colors-solarized'
+    \ | Plug 'robertmeta/nofrils'
+  Plug 'flazz/vim-colorschemes'
+  Plug 'felixhummel/setcolors.vim'             " F9, S-F9, A-F9 color changer
+  Plug 'moll/vim-bbye'                         " :Bdelete :Bd to close buffer
 
   " dev plugins
-  Plug 'fatih/vim-go', { 'do' : 'vim +GoUpdateBinaries +qall && gometalinter --install --update' }
+  "Plug 'fatih/vim-go', { 'do' : 'vim +GoUpdateBinaries +qall && gometalinter --install --update' }
+  Plug 'fatih/vim-go', { 'for' : 'go' }
+  Plug 'cespare/vim-toml', { 'for' : 'toml' }
+  Plug 'pangloss/vim-javascript', { 'for' : 'js' }
+  Plug 'moll/vim-node'
+  Plug 'othree/html5-syntax.vim'
+  Plug 'othree/html5.vim'
+  Plug 'groenewege/vim-less'
+  Plug 'othree/javascript-libraries-syntax.vim'
 
   " neovim specific plugins
   if has('nvim')
@@ -45,6 +57,9 @@ set noshowmode              " hide the status line's "-- INSERT --"
 "set timeoutlen=50
 "set ttimeoutlen=0
 
+" clear useless status messages
+"nmap <silent> :w<CR> :w<CR>
+
 " cursor and mouse
 set mouse=a  " allow mouse to change cursor/select lines (use r to disable it)
 set cursorline     " highlight the cursor's line
@@ -67,8 +82,9 @@ map <C-K> :bnext<CR>
 "map <C-k> <C-w>k
 "map <C-l> <C-w>l
 "map <C-h> <C-w>h
-map <Tab><Tab> <C-W>w
-imap <Tab><Tab> <Esc><C-W>w
+nmap <Tab><Tab> <C-W>w      " move to window bottom-right of cursor
+nmap <S-Tab><S-Tab> <C-W>W  " move to window top-left of cursor
+"imap <Tab><Tab> <Esc><C-W>w
 nmap <leader>pp :set paste!<CR>
 
 " clipboard sharing
@@ -117,18 +133,19 @@ function! CraigSetup()
   "set list
   set listchars=tab:>-,trail:.,extends:#,nbsp:.
 
-  " default history is only 20
-  set history=100
-  set undolevels=100
+  " history and undos
+  set history=1000
+  set undolevels=1000
+  set undofile
+  set undodir=~/.vim/undodir
 
   " tab -> spaces
   set expandtab
-  set tabstop=2       " a tab is 4 spaces
-  set softtabstop=2   " tab size when insterting/pasting
-  set shiftwidth=2    " number of spaces to use for autoindenting
+  set tabstop=4       " a tab is 2 or 4 spaces
+  set softtabstop=4   " tab size when insterting/pasting
+  set shiftwidth=4    " number of spaces to use for autoindenting
   set shiftround      " use multiple of shiftwidth when indenting with '<' and '>'
   set smarttab        " insert tabs on the start of a line according to shiftwidth, not tabstop
-
   set autoindent " always set autoindenting on
   set copyindent " copy the previous indentation on autoindenting
 
@@ -138,9 +155,9 @@ function! CraigSetup()
   set foldnestmax=10    " deepest fold is 10 levels
   set foldlevel=1
 
-  set scrolloff=4
+  set scrolloff=4       " when scrolling up/down, do so from 10 lines of top/bottom
 
-  set shortmess=tWI
+  set shortmess=atWI
 
   set visualbell    " don't beep
   set noerrorbells  " don't beep
@@ -148,8 +165,8 @@ function! CraigSetup()
   set autoread      " Auto read when a file is changed on disk
 
   " get around vim's funky regex and use normal regex
-  nnoremap / /v     
-  vnoremap / /v
+  nnoremap / /\v
+  vnoremap / /\v
 
   " Turn on spell check for certain filetypes automatically
   autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us
@@ -174,6 +191,50 @@ function! ToggleScratch()
 endfunction
 map <leader>ss :call ToggleScratch()<CR>
 
+function! VimJavascriptSetup()
+  let g:javascript_enable_domhtmlcss = 0 	" 1 = Enables HTML/CSS syntax highlighting in JavaScript files
+  let g:javascript_ignore_javaScriptdoc = 0 " 1 = Disables JSDoc syntax highlighting
+endfunction
+
+function! Html5VimSetup()
+  let g:html5_event_handler_attributes_complete = 1 " 0 = Disable event-handler attributes support
+  let g:html5_rdfa_attributes_complete = 1          " 0 = Disable RDFa attributes support
+  let g:html5_microdata_attributes_complete = 1     " 0 = Disable microdata attributes support
+  let g:html5_aria_attributes_complete = 1          " 0 = Disable WAI-ARIA attribute support
+endfunction
+
+function! VimLessSetup() 
+  " map .less to .css , lessc is required.
+  nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
+endfunction
+
+function! JSlibSyntaxSetup()
+  " Support libs id:
+  " jQuery: jquery
+  " underscore.js: underscore
+  " Lo-Dash: underscore
+  " Backbone.js: backbone
+  " prelude.ls: prelude
+  " AngularJS: angularjs
+  " AngularUI: angularui
+  " AngularUI Router: angularuirouter
+  " React: react
+  " Flux: flux
+  " RequireJS: requirejs
+  " Sugar.js: sugar
+  " Jasmine: jasmine
+  " Chai: chai
+  " Handlebars: handlebars
+  let g:used_javascript_libs = 'underscore,backbone,react'
+
+  " example local vimrc setup for specific projects
+  "autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
+  "autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
+  "autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 1
+  "autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
+  "autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 0
+endfunction
+
 function! ColorSchemeSetup()
   " term color support
   if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
@@ -186,9 +247,30 @@ function! ColorSchemeSetup()
 
   " fixing 256 colors in tmux
   set t_Co=256                        " force vim to use 256 colors
-
-  " solarized theme
+  
+  " switch between bg colors
   set background=dark
+  "let g:nofrils_strbackgrounds=1
+  call togglebg#map("<F5>")
+
+  " solarized theme options
+  "
+  " option name               default     optional
+  " ------------------------------------------------
+  " g:solarized_termcolors=   16      |   256
+  " g:solarized_termtrans =   0       |   1
+  " g:solarized_degrade   =   0       |   1
+  " g:solarized_bold      =   1       |   0
+  " g:solarized_underline =   1       |   0
+  " g:solarized_italic    =   1       |   0
+  " g:solarized_contrast  =   "normal"|   "high" or "low"
+  " g:solarized_visibility=   "normal"|   "high" or "low"
+  " ------------------------------------------------
+  "let g:solarized_contrast   = "high"
+  "let g:solarized_visibility = "normal"
+
+  " solarized benokai 256-grayvim 256-jungle 256_noir Monokai 
+  " nofrils-dark nofris-light
   colorscheme solarized
 endfunction
 
@@ -227,12 +309,34 @@ endfunction
 function! SyntasticSetup()
   let g:syntastic_always_populate_loc_list = 1
   let g:syntastic_auto_loc_list = 0 " use :lopen / :lclose to open/show
-  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_open = 0
   let g:syntastic_check_on_wq = 0
+  let g:syntastic_aggregate_errors = 0 
 
-  " vim-go fixes
-  let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-  let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+  " symbols
+  let g:syntastic_error_symbol = '->'
+  let g:syntastic_warning_symbol = '->'
+  let g:syntastic_style_error_symbol = '->'
+  let g:syntastic_style_warning_symbol = '->'
+  "let g:syntastic_stl_format = '[S line:%F (%t)]'
+  let g:syntastic_stl_format = '[%t]'
+
+  " colors
+  "highlight SyntasticError
+  "highlight SyntasticWarninga
+  "highlight SyntasticErrorLine 
+  "highlight SyntasticWarningLine
+  highlight SyntasticErrorSign  ctermfg=000 ctermbg=001 guibg=#FF0000
+  highlight SyntasticWarningSign  ctermfg=000 ctermbg=003 guibg=#000000
+
+  " go
+  let g:syntastic_go_checkers = ['gometalinter'] " everything + kitchensink
+  "let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+
+  " python 
+  let g:syntastic_python_checkers = ['pylint']  " maybe add pep8
+  let g:syntastic_python_pylint_post_args="--max-line-length=120"
+  let g:syntastic_python_flake8_args='--ignore=E501,E225'
 endfunction
 
 function! AirlineSetup()
@@ -264,19 +368,19 @@ function! VimGoSetup()
   au FileType go nmap <Leader>ds <Plug>(go-def-split)
   au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
   au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-  let g:go_auto_type_info = 1
-  let g:go_fmt_command = "gofmt"
-  let g:go_fmt_experimental = 1
-  let g:go_dispatch_enabled = 0	" vim-dispatch needed
-  let g:go_metalinter_autosave = 1
-  let g:go_metalinter_autosave_enabled = ['vet', 'golint']
-  let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-  let g:go_term_enabled = 0
-  let g:go_term_mode = "vertical"
-  let g:go_highlight_functions = 1
+"  let g:go_auto_type_info = 1
+"  let g:go_fmt_command = "gofmt"
+"  let g:go_fmt_experimental = 1
+"  let g:go_dispatch_enabled = 0	" vim-dispatch needed
+"  let g:go_metalinter_autosave = 1
+"  let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+"  let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+"  let g:go_term_enabled = 0
+"  let g:go_term_mode = "vertical"
+"  let g:go_highlight_functions = 1
   let g:go_highlight_methods = 1
-  let g:go_highlight_structs = 1
-  let g:go_highlight_interfaces = 1
+"  let g:go_highlight_structs = 1
+"  let g:go_highlight_interfaces = 1
   let g:go_highlight_operators = 1
   let g:go_highlight_extra_types = 1
   let g:go_highlight_build_constraints = 1
@@ -354,10 +458,15 @@ function! NeocompleteSetup()
   let g:neocomplete#same_filetypes._ = '_'
 endfunction
 
+call CraigSetup()
+call ColorSchemeSetup()
 call AirlineSetup()
 call SyntasticSetup()
 call VimGoSetup()
 call DeopleteSetup()
 call TagbarSetup()
-call ColorSchemeSetup()
-call CraigSetup()
+call VimJavascriptSetup()
+call Html5VimSetup()
+"call VimLessSetup()
+call JSlibSyntaxSetup()
+
