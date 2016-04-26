@@ -204,8 +204,11 @@ function! Html5VimSetup()
 endfunction
 
 function! VimLessSetup() 
+  autocmd BufNewFile,BufRead *.less set filetype=less
+  autocmd FileType less set omnifunc=csscomplete#CompleteCSS
+
   " map .less to .css , lessc is required.
-  nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
+  "nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
 endfunction
 
 function! JSlibSyntaxSetup()
@@ -337,6 +340,11 @@ function! SyntasticSetup()
   let g:syntastic_python_checkers = ['pylint']  " maybe add pep8
   let g:syntastic_python_pylint_post_args="--max-line-length=120"
   let g:syntastic_python_flake8_args='--ignore=E501,E225'
+
+  " javascript
+  " see http://www.panozzaj.com/blog/2015/08/28/must-have-vim-javascript-setup/ for more JS exclusions
+  let g:syntastic_javascript_checkers = ['jshint']
+  
 endfunction
 
 function! AirlineSetup()
@@ -467,6 +475,6 @@ call DeopleteSetup()
 call TagbarSetup()
 call VimJavascriptSetup()
 call Html5VimSetup()
-"call VimLessSetup()
+call VimLessSetup()
 call JSlibSyntaxSetup()
 
