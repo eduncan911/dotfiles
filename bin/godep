@@ -5,7 +5,7 @@
 # gostatus, gofresh and so on.
 
 if [ "$1" == "restore" ]; then
-    echo "WARNING: godep restore <- this will frack with your $GOPATH !!"
+    echo "WARNING: godep restore <- this will frack with your \$GOPATH !!"
     echo "WARNING: to override, use your installed version of godep like this:"
     echo "WARNING:      \$GOPATH/bin/godep restore"
     echo "WARNING: Aborting ..."
