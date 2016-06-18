@@ -42,7 +42,7 @@ casks=( $(brew cask list) )
 if [[ "$1" == "upgrade" ]]; then
   for cask in ${casks[@]}; do
     current="$(brew cask info $cask | sed -n '1p' | sed -n 's/^.*: \(.*\)$/\1/p')"
-    installed=( $(ls /opt/homebrew-cask/Caskroom/$cask))
+    installed=( $(ls /usr/local/Caskroom/$cask))
     if (! [[ " ${installed[@]} " == *" $current "* ]]); then
       echo "Upgrading $cask to v$current."
       (set -x; brew cask install $cask --force;)
@@ -54,7 +54,7 @@ else
   echo "Inspecting ${#casks[@]} casks. Use 'brew-cask.sh upgrade' to perform any updates."
   for (( i = i ; i < ${#casks[@]} ; i++ )); do
     current="$(brew cask info ${casks[$i]} | sed -n '1p' | sed -n 's/^.*: \(.*\)$/\1/p')"
-    installed=( $(ls /opt/homebrew-cask/Caskroom/${casks[$i]}))
+    installed=( $(ls /usr/local/Caskroom/${casks[$i]}))
     if (! [[ " ${installed[@]} " == *" $current "* ]]); then
       casks[$i]="${casks[$i]}$(tput sgr0)$(tput setaf 2) ✔$(tput sgr0)"
     fi
