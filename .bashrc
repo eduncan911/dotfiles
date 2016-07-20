@@ -46,7 +46,8 @@ EDITOR=nvim; export EDITOR
 # source external scripts
 [[ -s "/usr/bin/virtualenvwrapper.sh" ]] && source /usr/bin/virtualenvwrapper.sh    # PROMPT: Python VirtualEnvWrapper
 [[ -s "$HOME/bin/posh-git-prompt.sh" ]] && source "$HOME/bin/posh-git-prompt.sh"	# PROMPT: POSH-stype Git Prompt
-[[ -d "$HOME/.rbenv" ]] && eval "$(rbenv init -)"	# Ruby rbenv
+[[ -d "$HOME/.rbenv" ]] && eval "$(rbenv init -)"	                                # Ruby rbenv
+[[ -s "/usr/local/bin/aws_completer" ]] && complete -C aws_completer aws            # aws autocompletion
 
 # todo-txt
 if [[ -s "$HOME/bin/todo_completion" ]]; then
