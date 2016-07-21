@@ -6,14 +6,13 @@
 # "Real" git is the second one returned by 'which'
 REAL_GIT=$(which -a git | sed -n 2p)
 
-# Does the remote "origin" point to g4.github.com?
+# jwplayer
 if ("$REAL_GIT" remote -v 2>/dev/null |
-    grep '^origin\b.*g4.github.com.*(push)$' >/dev/null 2>&1); then
+    grep '^origin\b.*github.com:jwplayer.*(push)$' >/dev/null 2>&1); then
+    # livevote
 
-    export GIT_AUTHOR_NAME='Eric Duncan'
-    export GIT_AUTHOR_EMAIL='eric@gravity4.com'
-    echo "GIT: changed identity to eric@gravity4.com\n"
-
+    export GIT_AUTHOR_NAME='Eric Duncan (eduncan911)'
+    export GIT_AUTHOR_EMAIL='eduncan+githubcommit@jwplayer.com'
 fi
 
 "$REAL_GIT" "$@"
