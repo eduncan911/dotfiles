@@ -1,6 +1,7 @@
 #/bin/bash
 
 # istats
+# install with: gem install iStats
 if [[ -s /usr/local/bin/istats ]]; then
 	/usr/local/bin/istats extra
 	/usr/local/bin/istats fan speed
