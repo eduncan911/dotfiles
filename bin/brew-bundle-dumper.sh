@@ -30,10 +30,12 @@ rm .Brewfile.tmp
 
 # instructions
 echo "New .Brewfile is ready.  Install with:"
-echo "  $ brew bundle --file=.Brewfile"
+echo "  $ brew bundle --file=.Brewfile -v"
 echo 
 echo "Additionally, you can move this file to your root and use it globally:"
 echo "  $ mv .Brewfile ~/"
-echo "  $ brew bundle --global"
+echo "  $ brew bundle --global -v"
 echo 
+echo "Review the verbose output carefully for additional commands to run"
+echo "for each formula."
 

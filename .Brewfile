@@ -1,11 +1,9 @@
-tap 'beeftornado/rmtree'
 brew 'ack'
-brew 'git'
 brew 'amazon-ecs-cli'
 brew 'python3'
 brew 'asciinema'
 brew 'python'
-brew 'little-cms'
+brew 'little-cms', args: ['with-python']
 brew 'asciinema2gif'
 brew 'awscli'
 brew 'bash'
@@ -14,10 +12,9 @@ brew 'bdw-gc'
 brew 'binutils'
 brew 'boost'
 brew 'certbot'
-brew 'coreutils'
+brew 'coreutils', args: ['with-gmp']
 brew 'ctags'
 brew 'gnutls'
-brew 'emacs'
 brew 'findutils', args: ['with-default-names']
 brew 'gawk'
 brew 'gnu-indent', args: ['with-default-names']
@@ -26,10 +23,11 @@ brew 'gnu-tar', args: ['with-default-names']
 brew 'gnu-which', args: ['with-default-names']
 brew 'gsl'
 brew 'gtkmm'
-brew 'htop'
+brew 'htop', args: ['with-ncurses']
 brew 'jq'
 brew 'lynx'
 brew 'node'
+brew 'openssl'
 brew 'parallel'
 brew 'plantuml'
 brew 'popt'
@@ -42,14 +40,14 @@ brew 'syncthing-inotify'
 brew 'tmux'
 brew 'todo-txt'
 brew 'tree'
-brew 'vim', args: ['with-lua', 'with-override-system-vi']
+brew 'vim', args: ['with-lua', 'with-luajit', 'with-mzscheme', 'with-tcl', 'with-override-system-vi']
 brew 'watch'
 brew 'wdiff', args: ['with-gettext']
-brew 'wget'
+brew 'wget', args: ['with-gpgme', 'with-iri', 'with-libmetalink', 'with-libressl', 'with-pcre']
 brew 'zsh'
-brew 'beeftornado/rmtree/brew-rmtree'
-brew 'beeftornado/rmtree/brew-rmtree'
-brew 'go-delve/delve/delve'
+brew 'curl', args: ['with-c-ares', 'with-libidn', 'with-libssh2', 'with-nghttp2', 'with-rtmpdump']
+brew 'git', args: ['with-blk-sha1', 'with-brewed-curl', 'with-brewed-openssl', 'with-brewed-svn']
+tap 'homebrew/dupes'
 brew 'homebrew/dupes/diffutils'
 brew 'homebrew/dupes/ed', args: ['with-default-names']
 brew 'homebrew/dupes/file-formula'
@@ -64,5 +62,10 @@ brew 'homebrew/dupes/openssh'
 brew 'homebrew/dupes/rsync'
 brew 'homebrew/dupes/screen'
 brew 'homebrew/dupes/unzip'
-brew 'neovim/neovim/neovim'
+tap 'beeftornado/rmtree'
+brew 'beeftornado/rmtree/brew-rmtree'
+tap 'neovim/neovim'
+brew 'neovim/neovim/neovim' 
+tap 'vitorgalvao/tiny-scripts'
 brew 'vitorgalvao/tiny-scripts/cask-repair'
+
