@@ -135,8 +135,8 @@ __powerline() {
         PS1="$BG_BASE00$FG_BASE2 \u@\h $RESET"
         PS1+="$BG_BASE01$FG_BASE2 \w $RESET"
         PS1+="$FG_BASE3$(__git_info)$RESET"
-        PS1+="$BG_BASE00$FG_BASE2 media-api$(__virtualenv_info) $RESET"
-        PS1+="$BG_BASE01$FG_BASE2 r1.9.33$(__rbenv_info) $RESET"
+        PS1+="$BG_BASE00$FG_BASE2$(__virtualenv_info)$RESET"
+        PS1+="$BG_BASE01$FG_BASE2$(__rbenv_info)$RESET"
         #PS1+="$BG_YELLOW$FG_BASE3 $PS_SYMBOL $RESET"
         PS1+="$BG_EXIT"
         PS1+="\n\$ " # i prefer two lines... my eyes train easier
