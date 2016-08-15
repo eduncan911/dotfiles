@@ -12,7 +12,7 @@ if ("$REAL_GIT" remote -v 2>/dev/null |
     # livevote
 
     export GIT_AUTHOR_NAME='Eric Duncan (eduncan911)'
-    export GIT_AUTHOR_EMAIL='eduncan+githubcommit@jwplayer.com'
+    export GIT_AUTHOR_EMAIL='eduncan@jwplayer.com'
 fi
 
 "$REAL_GIT" "$@"
