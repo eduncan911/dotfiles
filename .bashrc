@@ -45,6 +45,7 @@ EDITOR=nvim; export EDITOR
 
 # source external scripts
 [[ -s "/usr/bin/virtualenvwrapper.sh" ]] && source /usr/bin/virtualenvwrapper.sh    # PROMPT: Python VirtualEnvWrapper
+[[ -s "/usr/local/bin/virtualenvwrapper.sh" ]] && source /usr/local/bin/virtualenvwrapper.sh
 [[ -s "$HOME/bin/posh-git-prompt.sh" ]] && source "$HOME/bin/posh-git-prompt.sh"	# PROMPT: POSH-stype Git Prompt
 [[ -d "$HOME/.rbenv" ]] && eval "$(rbenv init -)"	                                # Ruby rbenv
 [[ -s "/usr/local/bin/aws_completer" ]] && complete -C aws_completer aws            # aws autocompletion
@@ -151,4 +152,10 @@ case ${TERM} in
     [ -e /etc/sysconfig/bash-prompt-default ] && PROMPT_COMMAND=/etc/sysconfig/bash-prompt-default
     ;;
 esac
-__prompt_command
+
+if [[ -s "$HOME/bin/bash-powerline.sh" ]]; then
+    source $HOME/bin/bash-powerline.sh
+else
+    __prompt_command
+fi
+
