@@ -10,6 +10,7 @@ go get -v -u github.com/client9/misspell/cmd/misspell
 go get -v -u github.com/redefiance/go-find-references
 go get -v -u github.com/adjust/go-wrk
 go get -v -u github.com/uber/go-torch
+go get -v -u github.com/nsf/gocode && gocode close
 
 echo "Upgrading vim-go binaries ..."
 vim +GoUpdateBinaries +qall
