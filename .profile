@@ -31,11 +31,14 @@ PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 # since PATH was modified several times, export it here
 export PATH
 
-# AWS credentials
-if [ -f ~/.aws/eduncan911_credentials.txt ]; then
-  AWS_CREDENTIAL_FILE=~/.aws/eduncan911_credentials.txt
-  export AWS_CREDENTIAL_FILE
-fi
+# setup our CDPATH
+CDPATH=.:$HOME
+[[ -z "$GOROOT" ]] && CDPATH=$CDPATH:$GOROOT/src
+[[ -z "$GOPATH" ]] && CDPATH=$CDPATH:$GOPATH/src
+[[ -d "$GOPATH/src/golang.org" ]] && CDPATH=$CDPATH:$GOPATH/src/golang.org
+[[ -d "$GOPATH/src/github.com" ]] && CDPATH=$CDPATH:$GOPATH/src/github.com
+[[ -d "$GOPATH/src/bitbucket.org" ]] && CDPATH=$CDPATH:$GOPATH/src/bitbucket.org
+export CDPATH
 
 # setup a terminal (i3's sensible terminal)
 #TERM=xterm-256color
@@ -44,4 +47,7 @@ fi
 # pretty colors
 [[ -s "/usr/bin/dircolors" ]] && eval `dircolors ~/.dircolors`
 
+# iterm2 for OSX integration
+
+[[ -e "${HOME}/.iterm2_shell_integration.bash" ]] && source "${HOME}/.iterm2_shell_integration.bash"
 
