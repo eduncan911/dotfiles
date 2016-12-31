@@ -34,17 +34,20 @@ call plug#begin('~/.vim/plugged')
   Plug 'othree/html5.vim'
   Plug 'groenewege/vim-less'
   Plug 'othree/javascript-libraries-syntax.vim'
+  Plug 'vim-scripts/indentpython.vim'
 
   " neovim specific plugins
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do' : 'vim +UpdateRemotePlugins +qall' }
       \ | Plug 'zchee/deoplete-go', { 'do' : 'make'}
+      \ | Plug 'zchee/deoplete-jedi'
   else
     Plug 'Shougo/neocomplete.vim'
   endif
 call plug#end()
 
 " overriding sensible settings
+set encoding=utf-8          " not sure if this is set already
 let mapleader='\'
 set clipboard=unnamed
 set hidden
@@ -201,6 +204,11 @@ function! Html5VimSetup()
   let g:html5_rdfa_attributes_complete = 1          " 0 = Disable RDFa attributes support
   let g:html5_microdata_attributes_complete = 1     " 0 = Disable microdata attributes support
   let g:html5_aria_attributes_complete = 1          " 0 = Disable WAI-ARIA attribute support
+
+  au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
 endfunction
 
 function! VimLessSetup() 
@@ -423,8 +431,19 @@ function! DeopleteSetup()
   let g:deoplete#ignore_sources = {}
   let g:deoplete#ignore_sources._ = ['buffer', 'vim', 'member']
 
+  " go
   let g:deoplete#sources#go = 'vim-go'
   let g:deoplete#sources#go#align_class = 1
+
+  " python
+  " :h nvim-python-quickstart
+  let g:deoplete#sources#jedi#statement_length = 50
+  let g:deoplete#sources#jedi#enable_cache = 1
+  let g:deoplete#sources#jedi#show_docstring = 0
+  "let g:deoplete#sources#jedi#python_path = 
+  "let g:deoplete#sources#jedi#extra_path = 
+  "let g:python_host_prog = '/full/path/to/neovim2/bin/python'
+  "let g:python3_host_prog = '/full/path/to/neovim3/bin/python'
 
   "inoremap <expr><C-n> deoplete#mappings#manual_complete()
 endfunction
@@ -466,6 +485,30 @@ function! NeocompleteSetup()
   let g:neocomplete#same_filetypes._ = '_'
 endfunction
 
+function! PythonSetup()
+  " source from ...
+  "
+  " most to conform to pep8 and make python development easier
+
+  if has('nvim')
+    let g:python_host_prog = 'python2'
+    let g:python3_host_prog = 'python3'
+  endif
+
+  " pep8 indentions
+  au BufNewFile,BufRead *.py set 
+    \ tabstop=4 
+    \ softtabstop=4
+    \ shiftwidth=4
+    \ textwidth=79
+    \ expandtab
+    \ autoindent
+    \ fileformat=unix
+
+  " flag unnecessary whitespace
+  "au BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+endfunction
+
 call CraigSetup()
 call ColorSchemeSetup()
 call AirlineSetup()
@@ -477,4 +520,4 @@ call VimJavascriptSetup()
 call Html5VimSetup()
 call VimLessSetup()
 call JSlibSyntaxSetup()
-
+call PythonSetup()
