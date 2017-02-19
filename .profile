@@ -20,8 +20,9 @@ PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:/usr/local/sbin:$
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # GO stuff
-#GOROOT="$(brew --prefix)/opt/go/libexec/bin"; export GOROOT
-GOROOT="$HOME/.go/current"; export GOROOT # allows dif. versions, downgrades, portability, etc
+# allows for multiple versions, diffing upgrades, downgrades and portable copies.
+# change which is in use with: ln -sfn ~/.go/go1.7.3 ~/.go/current
+GOROOT="$HOME/.go/current"; export GOROOT
 GOPATH="$HOME/go"; export GOPATH
 PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 
@@ -32,12 +33,13 @@ PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 export PATH
 
 # setup our CDPATH
-CDPATH=.:$HOME
-[[ -z "$GOROOT" ]] && CDPATH=$CDPATH:$GOROOT/src
-[[ -z "$GOPATH" ]] && CDPATH=$CDPATH:$GOPATH/src
-[[ -d "$GOPATH/src/golang.org" ]] && CDPATH=$CDPATH:$GOPATH/src/golang.org
-[[ -d "$GOPATH/src/github.com" ]] && CDPATH=$CDPATH:$GOPATH/src/github.com
-[[ -d "$GOPATH/src/bitbucket.org" ]] && CDPATH=$CDPATH:$GOPATH/src/bitbucket.org
+CDPATH=:$HOME       # to output relative cd, use CDPATH=.:$HOME 
+# uncomment the below to CD to golang source files
+#[[ -z "$GOROOT" ]] && CDPATH=$CDPATH:$GOROOT/src
+#[[ -z "$GOPATH" ]] && CDPATH=$CDPATH:$GOPATH/src
+#[[ -d "$GOPATH/src/golang.org" ]]       && CDPATH=$CDPATH:$GOPATH/src/golang.org
+[[ -d "$GOPATH/src/github.com" ]]       && CDPATH=$CDPATH:$GOPATH/src/github.com
+[[ -d "$GOPATH/src/bitbucket.org" ]]    && CDPATH=$CDPATH:$GOPATH/src/bitbucket.org
 export CDPATH
 
 # setup a terminal (i3's sensible terminal)
