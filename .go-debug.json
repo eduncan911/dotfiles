@@ -1,0 +1,11 @@
+{
+    "configurations": [
+    {    
+        "name": "Test Verbose",
+        "mode": "test",
+        "cmd": "...",
+        "workspaceRoot": "...",
+        "args": ["accept-multiclient", "true"],
+        "buildFlags": ["-verbose=5", "-v"]
+    }]
+}
