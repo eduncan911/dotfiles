@@ -38,8 +38,8 @@ call plug#begin('~/.vim/plugged')
 
   " neovim specific plugins
   if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do' : 'vim +UpdateRemotePlugins +qall' }
-      \ | Plug 'zchee/deoplete-go', { 'do' : 'make'}
+    Plug 'Shougo/deoplete.nvim',
+      \ | Plug 'zchee/deoplete-go',
       \ | Plug 'zchee/deoplete-jedi'
   else
     Plug 'Shougo/neocomplete.vim'
