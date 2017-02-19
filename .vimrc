@@ -342,6 +342,7 @@ function! SyntasticSetup()
 
   " go
   let g:syntastic_go_checkers = ['gometalinter'] " everything + kitchensink
+  let g:syntastic_go_gometalinter_args = '--config=/Users/eric/.gometalinter.conf'
   "let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 
   " python 
@@ -491,8 +492,8 @@ function! PythonSetup()
   " most to conform to pep8 and make python development easier
 
   if has('nvim')
-    let g:python_host_prog = 'python2'
-    let g:python3_host_prog = 'python3'
+    let g:python_host_prog = '/usr/local/bin/python2'
+    let g:python3_host_prog = '/usr/local/bin/python3'
   endif
 
   " pep8 indentions
