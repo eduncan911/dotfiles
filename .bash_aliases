@@ -64,3 +64,8 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # todo-txt alias
 alias t='todo.sh -d ~/.todo/config'
+
+# docker shortcuts
+alias docker-clean='docker rm -v $(docker ps -a -q -f status=exited);docker rmi $(docker images -f "dangling=true" -q);'
+alias docker-clean-everything='docker rm -v $(docker ps -a -q -f status=exited);docker rmi -f $(docker images -q);'
+
