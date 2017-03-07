@@ -17,12 +17,15 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 # modify bash behavior
+#
+# requires homebrew's bash on macos.  install with:
+# https://johndjameson.com/blog/updating-your-shell-with-homebrew/
 shopt -s histappend
 shopt -s checkwinsize
 shopt -s cdspell
-#shopt -s dirspell # homebrew isn't compiled with dirspell! argh...
+shopt -s dirspell
 shopt -s cmdhist
-#shopt -s globstar # homebrew isn't compiled with this either...
+shopt -s globstar
 
 # history: setting to unlimited
 HISTCONTROL=ignoreboth:ignoredups:erasedups
