@@ -22,7 +22,7 @@ if [ -x /usr/local/bin/brew ]; then
 fi
 
 # GNU coreutils overriding OS X natives
-if [ -n $BREW_PREFIX ]; then
+if [[ $BREW_PREFIX != "" ]]; then
   BREW_COREUTILS=$(brew --prefix coreutils) > /dev/null 2>&1
   if [ -n $BREW_COREUTILS ]; then
     PATH="$BREW_COREUTILS/libexec/gnubin:/usr/local/bin:/usr/local/sbin:$PATH"
@@ -58,9 +58,8 @@ export CDPATH
 #export TERM
 
 # pretty colors
-[[ -s "/usr/bin/dircolors" ]] && eval `dircolors ~/.dircolors`
+[ -s "/usr/bin/dircolors" ] && [ -d "~/.dircolors" ] && eval `dircolors ~/.dircolors`
 
 # iterm2 for OSX integration
-
 [[ -e "${HOME}/.iterm2_shell_integration.bash" ]] && source "${HOME}/.iterm2_shell_integration.bash"
 
