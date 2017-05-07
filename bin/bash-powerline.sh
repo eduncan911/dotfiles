@@ -127,8 +127,9 @@ __powerline() {
     }
 
     ps1() {
-        if [ ! $? -eq 0 ]; then
-            local BG_EXIT="$BG_RED$FG_BASE3 $? $RESET"
+        local LAST_ERROR=$?
+        if [ ! $LAST_ERROR -eq 0 ]; then
+            local BG_EXIT="$BG_RED$FG_BASE3 $LAST_ERROR $RESET"
         fi
 
         #PS1="$FG_BASE3$BG_YELLOW YELLOW $BG_ORANGE ORANGE $BG_RED RED $BG_MAGENTA MAGENTA $BG_VIOLET VIOLET $BG_BLUE BLUE $BG_CYAN CYAN $BG_GREEN GREEN $RESET\n\n\n"
