@@ -15,9 +15,20 @@ if [[ -d "$HOME/.virtualenvs" ]]; then
   #VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 fi
 
-# GNU coreutils and more, overriding OS X natives
-PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:/usr/local/sbin:$PATH"
-MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+# trigger to know if we are on macos w/homebrew (used in bashrc as well)
+if [ -x /usr/local/bin/brew ]; then
+  BREW_PREFIX="$(brew --prefix)"
+  export BREW_PREFIX
+fi
+
+# GNU coreutils overriding OS X natives
+if [ -n $BREW_PREFIX ]; then
+  BREW_COREUTILS=$(brew --prefix coreutils) > /dev/null 2>&1
+  if [ -n $BREW_COREUTILS ]; then
+    PATH="$BREW_COREUTILS/libexec/gnubin:/usr/local/bin:/usr/local/sbin:$PATH"
+    MANPATH="$BREW_COREUTILS/libexec/gnuman:$MANPATH"
+  fi
+fi
 
 # GO stuff
 # allows for multiple versions, diffing upgrades, downgrades and portable copies.
