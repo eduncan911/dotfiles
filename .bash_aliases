@@ -11,10 +11,10 @@
 # more intuitive options, and add a touch of color
 alias grep='grep --color=auto --exclude-dir=\.git --exclude-dir=\.svn --exclude-dir=\.cache'
 
-# more colors
 # enable color support of ls and also add handy aliases
-type foo >/dev/null 2>&1 && DIRCOLORS=1
-if [ -z ${DIRCOLORS+x} ]; then
+# this requires the coreutils system package installed (for dircolors)
+type dircolors >/dev/null 2>&1 && DIRCOLORS=1
+if [ -n $DIRCOLORS ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
   alias dir='dir --color=auto'
@@ -66,6 +66,14 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias t='todo.sh -d ~/.todo/config'
 
 # docker shortcuts
-alias docker-clean='docker rm -v $(docker ps -a -q -f status=exited);docker rmi $(docker images -f "dangling=true" -q);'
-alias docker-clean-everything='docker rm -v $(docker ps -a -q -f status=exited);docker rmi -f $(docker images -q);'
+alias doco='docker-compose'
+alias docker-clean='\
+    docker rm -v $(docker ps -a -q -f status=exited);\
+    docker rmi $(docker images -f "dangling=true" -q);\
+    docker network prune -f'
+alias docker-clean-everything='\
+    docker rm -v $(docker ps -a -q -f status=exited);\
+    docker rmi -f $(docker images -q);\
+    docker volume rm -f $(docker volume ls | awk "{print $2}");\
+    docker network rm -f $(docker network ls | awk "{print $2}")'
 
