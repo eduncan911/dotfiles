@@ -8,12 +8,12 @@
 
 # enable bash aliases
 if [ -f ~/.bash_aliases ]; then
-  source ~/.bash_aliases
+    source ~/.bash_aliases
 fi
 
 # enable bash completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  source $(brew --prefix)/etc/bash_completion
+if [ -f $BREW_PREFIX/etc/bash_completion ]; then
+    source $BREW_PREFIX/etc/bash_completion
 fi
 
 # modify bash behavior
@@ -40,8 +40,11 @@ HISTFILE=~/.bash_history_unlimited
 # sort ls hidden files first
 LC_COLLATE="C"; export LC_COLLATE
 
-# default editor
-EDITOR=nvim; export EDITOR
+# if we have neovim, set the default editor to that
+if [[ -x "nvim" ]]; then
+	EDITOR=nvim
+	export EDITOR
+fi
 
 # homebrew api token
 [[ -s "$HOME/.profile.private" ]] && source "$HOME/.profile.private"
