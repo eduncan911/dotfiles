@@ -48,7 +48,7 @@ function _upgrade_go_binary {
 [[ -d "$HOME/.go" ]] && _upgrade_go_binary
 unset _upgrade_go_binary
 
-echo "Upgrading go tools ..."
+echo "Upgrading go tools used by IDEs and vim..."
 go get -u golang.org/x/tools/...
 go get -u golang.org/x/tools/cmd/gorename
 go get -u github.com/golang/lint/golint
@@ -64,10 +64,45 @@ go get -u github.com/lukehoban/go-outline
 go get -u github.com/nsf/gocode && gocode close
 go get -u github.com/ramya-rao-a/go-outline
 
-echo "Upgrading vim-go binaries ..."
-vim +GoUpdateBinaries +qall
-
-echo "Upgrading gometalinter tools ..."
+echo "Upgrading gometalinter linter tools used by IDEs and vim ..."
 go get -u github.com/alecthomas/gometalinter
 gometalinter --install --update
 
+echo "Upgrading vim-go binaries ..."
+vim +GoUpdateBinaries +qall
+
+echo "Upgrade personal utilities built with Go ..."
+echo "  godoc2ghmd          # converts go docs to GitHub README.md markdown"
+go get -u github.com/eduncan911/godoc2ghmd
+echo "  godoc2md            # converts go docs to README.md markdown"
+go get -u github.com/davecheney/godoc2md
+echo "  gostatus            # checks status of packages in GOPATH"
+go get -u github.com/shurcooL/gostatus
+echo "  gofresh             # checks status of packages in GOPATH"
+go get -u github.com/divan/gofresh
+echo "  wuzz                # command line http inspector"
+go get -u github.com/asciimoo/wuzz
+echo "  goveralls           # coveralls utility"
+go get -u github.com/mattn/goveralls
+echo "  go-junit-report     # converts 'go test' format to junit for Jenkins"
+go get -u github.com/jstemmer/go-junit-report
+echo "  go-torch            # runtime visualizer"
+go get -u github.com/uber/go-torch
+echo "  go-fuzz             # fuzzy-input tester"
+go get -u github.com/dvyukov/go-fuzz/go-fuzz
+echo "  go-fuzz-build       # fuzzy-input tester"
+go get -u github.com/dvyukov/go-fuzz/go-fuzz-build
+echo "  hugo                # static site generator"
+go get -u github.com/spf13/hugo
+echo "  godep               # dependency manager"
+go get -u github.com/tools/godep
+echo "  govendor            # dependency manager"
+go get -u github.com/kardianos/govendor
+echo "  callgraph           # displays the callgraph of a program"
+go get -u golang.org/x/tools/cmd/callgraph
+
+echo "Done. \
+Not upgraded as part of this script:
+    * packages in $GOPATH/src/* (use gostatus and gofresh for that)
+    * delve debugger (macOS: update w/homebrew; linux: update per directions)
+"
