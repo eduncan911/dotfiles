@@ -21,7 +21,6 @@ call plug#begin('~/.vim/plugged')
     \ | Plug 'altercation/vim-colors-solarized'
     \ | Plug 'robertmeta/nofrils'
   Plug 'flazz/vim-colorschemes'
-  Plug 'felixhummel/setcolors.vim'             " F9, S-F9, A-F9 color changer
   Plug 'moll/vim-bbye'                         " :Bdelete :Bd to close buffer
 
   " dev plugins
@@ -253,16 +252,16 @@ function! ColorSchemeSetup()
     " disable Background Color Erase (BCE) so that color schemes
     " render properly when inside 256-color tmux and GNU screen.
     " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-  set t_ut=
+    set t_ut=
   endif
 
   " fixing 256 colors in tmux
   set t_Co=256                        " force vim to use 256 colors
   
   " switch between bg colors
-  set background=dark
+  "set background=dark
   "let g:nofrils_strbackgrounds=1
-  call togglebg#map("<F5>")
+  "call togglebg#map("<F5>")
 
   " solarized theme options
   "
@@ -280,9 +279,9 @@ function! ColorSchemeSetup()
   "let g:solarized_contrast   = "high"
   "let g:solarized_visibility = "normal"
 
-  " solarized benokai 256-grayvim 256-jungle 256_noir Monokai 
+  " solarized benokai 256-grayvim 256-jungle 256_noir Monokai solarized
   " nofrils-dark nofris-light
-  colorscheme solarized
+  colorscheme Monokai
 endfunction
 
 function! TagbarSetup()

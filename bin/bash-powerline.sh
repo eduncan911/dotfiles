@@ -133,11 +133,11 @@ __powerline() {
         fi
 
         #PS1="$FG_BASE3$BG_YELLOW YELLOW $BG_ORANGE ORANGE $BG_RED RED $BG_MAGENTA MAGENTA $BG_VIOLET VIOLET $BG_BLUE BLUE $BG_CYAN CYAN $BG_GREEN GREEN $RESET\n\n\n"
-        PS1="$BG_MAGENTA$FG_BASE2$(__virtualenv_info)$RESET"
-        PS1+="$BG_VIOLET$FG_BASE2$(__rbenv_info)$RESET"
-        PS1+="$BG_BASE00$FG_BASE2 \u@\h $RESET"
-        PS1+="$BG_BASE01$FG_BASE2 \w $RESET"
-        PS1+="$FG_BASE3$(__git_info)$RESET"
+        PS1="$BG_MAGENTA$FG_BASE02$(__virtualenv_info)$RESET"
+        PS1+="$BG_VIOLET$FG_BASE02$(__rbenv_info)$RESET"
+        PS1+="$BG_BASE03$FG_BASE2 \u@\h $RESET"
+        PS1+="$BG_BASE2$FG_BASE03 \w $RESET"
+        PS1+="$FG_BASE02$(__git_info)$RESET"
         #PS1+="$BG_YELLOW$FG_BASE3 $PS_SYMBOL $RESET"
         PS1+="$BG_EXIT"
         PS1+="\n\$ " # i prefer two lines... my eyes train easier
