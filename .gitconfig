@@ -1,11 +1,14 @@
 [pull]
 	rebase = true
 [user]
-	name = Eric Duncan
-	email = eduncan911+github@gmail.com
+	signingkey = 5CE0F95AA510AA8C
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg2
