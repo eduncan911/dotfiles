@@ -4,6 +4,9 @@
 # Used for things not related to bash. Environment vars, PATH and related. 
 # Should be available anytime.  Loaded by GUIs, Sublime, etc.
 
+# use gnupg2 exclusively (https://www.gnupg.org/(it)/documentation/manuals/gnupg/Common-Problems.html)
+export GPG_TTY=$(tty)
+
 # Ruby rbenv
 [[ -d "$HOME/.rbenv" ]] && PATH="$HOME/.rbenv/bin:$PATH"
 
