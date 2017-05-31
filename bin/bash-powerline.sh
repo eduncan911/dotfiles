@@ -68,7 +68,30 @@ __powerline() {
     esac
 
     __pwd_info() {
-        printf $(pwd | sed "s:$HOME/go/src/github.com/:/g/s/g/:" | sed "s:$HOME:~:" )
+        printf $( pwd | \
+            sed -E -e 's@/([^/])[^/]*@/\1@g' -e 's/.$//' | \
+            tr -d \\n; basename $(pwd); ) | \
+            sed -E -e 's@^/U/(e|eric)/*@~/@g' 
+    }
+
+    __pwd_info2 () {
+        local path="$PWD"
+        path="${path//~/\~}"
+        local out=""
+        for (( i=0; i<${#path}; i++ )); do
+            case "${path:i:1}" in
+                \~) out+="${path:i:1}" ;;
+                /) out+="${path:i:2}"; continue ;;
+                *) continue ;;
+            esac
+        done
+        local fout="${out:0:-1}${path##*/}"
+        if [[ -z "${fout// }" ]]; then
+            fout="/"
+        elif [[ "$fout" == "~" ]]; then
+            fout="~/"
+        fi
+        printf $fout
     }
 
     __virtualenv_info() {
@@ -136,7 +159,7 @@ __powerline() {
         PS1="$BG_MAGENTA$FG_BASE02$(__virtualenv_info)$RESET"
         PS1+="$BG_VIOLET$FG_BASE02$(__rbenv_info)$RESET"
         PS1+="$BG_BASE03$FG_BASE2 \u@\h $RESET"
-        PS1+="$BG_BASE2$FG_BASE03 \w $RESET"
+        PS1+="$BG_BASE2$FG_BASE03 $(__pwd_info2) $RESET"
         PS1+="$FG_BASE02$(__git_info)$RESET"
         #PS1+="$BG_YELLOW$FG_BASE3 $PS_SYMBOL $RESET"
         PS1+="$BG_EXIT"
