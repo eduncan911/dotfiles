@@ -367,6 +367,30 @@ function! AirlineSetup()
   let g:airline_symbols.space = "\ua0"
 endfunction
 
+function! TmuxlineSetup()
+  " via plugin edkolev/tmuxline.vim'
+  "let g:tmuxline_powerline_separators = 0
+  
+  " custom bar 
+  "
+  " from tmux manual:
+  "     #H    Hostname of local host
+  "     #h    Hostname of local host without the domain name
+  "     #F    Current window flag
+  "     #I    Current window index
+  "     #S    Session name
+  "     #W    Current window name
+  "     #(shell-command)  First line of the command's output
+  " string will be passed through strftime(3) before being used.
+  let g:tmuxline_preset = {
+      \'a'    : '#H',
+      \'b'    : '#S',
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#I', '#W', '#F'],
+      \'y'    : '%a',
+      \'z'    : '%R' }
+endfunction
+
 function! VimGoSetup()
   " vim-go related mappings
   au FileType go nmap <Leader>r <Plug>(go-run)
@@ -512,6 +536,7 @@ endfunction
 call CraigSetup()
 call ColorSchemeSetup()
 call AirlineSetup()
+call TmuxlineSetup()
 call SyntasticSetup()
 call VimGoSetup()
 call DeopleteSetup()
