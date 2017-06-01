@@ -387,8 +387,8 @@ function! TmuxlineSetup()
       \'b'    : '#S',
       \'win'  : ['#I', '#W'],
       \'cwin' : ['#I', '#W', '#F'],
-      \'y'    : '%a',
-      \'z'    : '%R' }
+      \'y'    : '',
+      \'z'    : ['%b %d %I:%M %p %z'] }
 endfunction
 
 function! VimGoSetup()
