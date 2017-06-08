@@ -90,11 +90,8 @@ nmap <S-Tab><S-Tab> <C-W>W  " move to window top-left of cursor
 nmap <leader>pp :set paste!<CR>
 
 " clipboard sharing
-set clipboard=unnamed
-nmap <C-C> :.w !pbcopy<CR><CR>
-vmap <C-C> :w !pbcopy<CR><CR>
-nmap <C-V> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-imap <C-V> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+nmap <C-V> :set paste<CR>"*p<Bar>:set nopaste<CR>
+imap <C-V> <Esc>:set paste<CR>"*p<Bar>:set nopaste<CR>
 
 " searching
 set incsearch   " show search matches as you type
@@ -105,7 +102,7 @@ nnoremap <CR> :nohlsearch<Bar>:echo<CR>
 
 " fixing scrolling issues with syntax highlighting
 syntax sync minlines=256
-set synmaxcol=128
+set synmaxcol=256
 set lazyredraw
 
 " ide-like intellisense
