@@ -1,6 +1,8 @@
 [pull]
 	rebase = true
 [user]
+	name = Eric Duncan
+	email = me@eduncan911.com
 	signingkey = 5CE0F95AA510AA8C
 [filter "lfs"]
 	clean = git-lfs clean %f
@@ -12,3 +14,5 @@
 	gpgsign = true
 [gpg]
 	program = gpg2
+[core]
+	excludesfile = /Users/eric/.gitignore
