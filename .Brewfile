@@ -43,6 +43,7 @@ brew "gnu-sed", args: ["with-default-names"]
 brew "gnu-tar", args: ["with-default-names"]
 brew "gnu-which", args: ["with-default-names"]
 brew "gnupg"
+brew "go"
 brew "graphviz", args: ["with-bindings", "with-freetype", "with-gts", "with-librsvg", "with-pango"]
 brew "grep", args: ["with-default-names"]
 brew "protobuf", args: ["with-python3"]
