@@ -33,6 +33,10 @@ echo "Installing Brew bundler and installing packages"
 brew tap Homebrew/bundle
 brew bundle --global
 
+echo "Setting Brew's bash as default"
+sudo echo /usr/local/bin/bash >> /etc/shells 
+chsh -s /usr/local/bin/bash 
+
 echo "Setting up Golang"
 mkdir ~/.go
 mkdir -p ~/go/src ~/go/bin ~/go/pkg
