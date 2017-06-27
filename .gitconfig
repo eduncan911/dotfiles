@@ -3,7 +3,7 @@
 [user]
 	name = Eric Duncan
 	email = me@eduncan911.com
-	signingkey = 5CE0F95AA510AA8C
+	signingkey = D475E1448666E626
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
