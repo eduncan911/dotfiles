@@ -4,6 +4,7 @@ set -o errexit
 # Install Chrome
 # Sign into Github, add SSH key for this machine.
 # download colors: git clone https://github.com/mbadolato/iTerm2-Color-Schemes
+# download fonts:  git clone https://github.com/powerline/fonts ~/code/
 
 # run setup script 
 
