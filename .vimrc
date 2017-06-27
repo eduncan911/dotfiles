@@ -8,7 +8,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 let g:plug_timeout=120
 call plug#begin('~/.vim/plugged')
-  Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-obsession'
     \ | Plug 'dhruvasagar/vim-prosession'
   Plug 'scrooloose/syntastic'
@@ -41,6 +40,7 @@ call plug#begin('~/.vim/plugged')
       \ | Plug 'zchee/deoplete-go',
       \ | Plug 'zchee/deoplete-jedi'
   else
+    Plug 'tpope/vim-sensible'
     Plug 'Shougo/neocomplete.vim'
   endif
 call plug#end()
@@ -536,7 +536,7 @@ call AirlineSetup()
 call TmuxlineSetup()
 call SyntasticSetup()
 call VimGoSetup()
-call DeopleteSetup()
+"call DeopleteSetup()
 call TagbarSetup()
 call VimJavascriptSetup()
 call Html5VimSetup()
