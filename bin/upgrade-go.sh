@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o errexit
 
 # WARNING: while this script should be safe to run on normal Go installs, it will
 # only upgrade the Go binaries of a special non-standard path - that I use on my
@@ -22,22 +23,22 @@ function _upgrade_go_binary {
         echo "Skipping Go binary upgrade (no version found)."
         return
     fi
-    if [[ -d "$HOME/.go/$GO_LATEST_VERSION" ]]; then
+    if [[ -d "~/.go/$GO_LATEST_VERSION" ]]; then
         echo "Lastest version of Go already installed, skipping upgrade."
         return
     fi
 
-    go version
+    [[ $(hash go 2>/dev/null) ]] && go version
     echo "Upgrading to $GO_LATEST_VERSION"
 
     # compatible with Linux and Darwin (maybe windows too)
     local GO_LATEST_FILENAME="$GO_LATEST_VERSION.$(uname -s | \
         tr '[:upper:]' '[:lower:]')-amd64.tar.gz"
-    echo "Downloading $GO_LATEST_FILENAME"
-    wget -q https://storage.googleapis.com/golang/$GO_LATEST_FILENAME \ -O $HOME/.go/$GO_LATEST_FILENAME
+    echo "Downloading $GO_LATEST_FILENAME to ~/.go/$GO_LATEST_FILENAME"
+    wget https://storage.googleapis.com/golang/$GO_LATEST_FILENAME -O ~/.go/$GO_LATEST_FILENAME
 
-    echo "Installing $GO_LATEST_FILENAME"
-    cd $HOME/.go/ 
+    echo "Installing $GO_LATEST_FILENAME" 
+    cd ~/.go
     tar zxf $GO_LATEST_FILENAME
     rm $GO_LATEST_FILENAME
     mv go $GO_LATEST_VERSION
@@ -45,8 +46,17 @@ function _upgrade_go_binary {
 
     go version
 }
-[[ -d "$HOME/.go" ]] && _upgrade_go_binary
+if [[ -d ~/.go ]]; then 
+    _upgrade_go_binary
+else
+    echo "No custom ~/.go/ detected.  Using system installed version."
+fi
 unset _upgrade_go_binary
+
+if [[ ! -x "$(which go)" ]]; then
+    echo "Go is not installed. Exiting."
+    exit 3
+fi
 
 echo "Upgrading go tools used by IDEs and vim..."
 go get -u golang.org/x/tools/...
