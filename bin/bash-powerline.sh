@@ -166,7 +166,7 @@ __powerline() {
         PS1+="\n\$ " # i prefer two lines... my eyes train easier
     }
 
-    PROMPT_COMMAND=ps1
+    PROMPT_COMMAND="history -a;ps1"
 }
 
 __powerline

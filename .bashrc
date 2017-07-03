@@ -28,7 +28,10 @@ shopt -s cmdhist
 shopt -s globstar
 
 # history: setting to unlimited
-HISTCONTROL=ignoreboth:ignoredups:erasedups
+# HISTCONTROL=erasedups" to cleanup any existing history (note, can be slow)
+# ignoreboth = ignorespace:ignoredups
+HISTCONTROL=ignoreboth
+HISTIGNORE="pwd:ls:ls -la:exit"
 HISTFILESIZE=
 HISTSIZE=
 HISTTIMEFORMAT="[%F %T] "
