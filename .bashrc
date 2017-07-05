@@ -73,3 +73,6 @@ if [[ -s "$HOME/bin/bash-powerline.sh" ]]; then
     source $HOME/bin/bash-powerline.sh
 fi
 
+# iterm-specific stuff
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
