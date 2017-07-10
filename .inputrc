@@ -1,0 +1,11 @@
+set bell-style none
+set colored-completion-prefix on
+set colored-stats on
+set completion-display-width 1
+#set completion-ignore-case on
+#set completion-map-case on
+set completion-query-items 50
+set editing-mode vi
+set menu-complete-display-prefix on
+Tab:complete
+"\e[Z":menu-complete
