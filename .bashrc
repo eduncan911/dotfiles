@@ -26,6 +26,7 @@ shopt -s cdspell
 shopt -s dirspell
 shopt -s cmdhist
 shopt -s globstar
+shopt -s dotglob
 
 # history: setting to unlimited
 # HISTCONTROL=erasedups" to cleanup any existing history (note, can be slow)
