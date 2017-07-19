@@ -24,6 +24,7 @@ brew "awscli"
 brew "bash"
 brew "bash-completion"
 brew "bazaar"
+brew "binutils"
 brew "cairomm"
 brew "openssl@1.1"
 brew "certbot"
@@ -43,6 +44,7 @@ brew "gnu-sed", args: ["with-default-names"]
 brew "gnu-tar", args: ["with-default-names"]
 brew "gnu-which", args: ["with-default-names"]
 brew "gnupg"
+brew "gnutls"
 brew "go"
 brew "graphviz", args: ["with-bindings", "with-freetype", "with-gts", "with-librsvg", "with-pango"]
 brew "grep", args: ["with-default-names"]
@@ -63,6 +65,7 @@ brew "m4"
 brew "make"
 brew "mercurial"
 brew "nano"
+brew "neovim"
 brew "nmap"
 brew "node"
 brew "openssh"
@@ -91,7 +94,6 @@ brew "watch"
 brew "wdiff", args: ["with-gettext"]
 brew "wget"
 brew "go-delve/delve/delve", args: ["HEAD"]
-brew "neovim/neovim/neovim"
 brew "sheharyarn/tap/vncviewer"
 brew "vitorgalvao/tiny-scripts/cask-repair"
 brew "zsh"
