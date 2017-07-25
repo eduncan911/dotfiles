@@ -7,5 +7,8 @@ set completion-display-width 1
 set completion-query-items 50
 set editing-mode vi
 set menu-complete-display-prefix on
+set show-all-if-ambiguous on
+#TAB:menu-complete
 Tab:complete
 "\e[Z":menu-complete
+#"\e[Z":menu-complete-backward
