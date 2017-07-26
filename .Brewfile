@@ -32,6 +32,7 @@ brew "cmake"
 brew "coreutils"
 brew "ctags"
 brew "diffutils"
+brew "dockviz"
 brew "ed", args: ["with-default-names"]
 brew "emacs"
 brew "findutils", args: ["with-default-names"]
