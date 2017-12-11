@@ -16,6 +16,7 @@
 	program = gpg2
 [core]
 	excludesfile = /Users/eric/.gitignore
+	editor = vim
 [alias]
     squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
     cleanup = "!git branch --merged | grep -v '\\*\\|master|develop|dev' | xargs -n 1 git branch -d"
