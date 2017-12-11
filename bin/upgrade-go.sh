@@ -47,7 +47,8 @@ function _upgrade_go_binary {
     go version
 }
 if [[ -d ~/.go ]]; then 
-    _upgrade_go_binary
+    #_upgrade_go_binary
+    echo "Skipped upgrading binary. source is now paged."
 else
     echo "No custom ~/.go/ detected.  Using system installed version."
 fi
@@ -60,12 +61,11 @@ fi
 
 echo "Upgrading go tools used by IDEs and vim..."
 go get -u golang.org/x/tools/...
-go get -u golang.org/x/tools/cmd/gorename
+go get -u golang.org/x/tools/cmd/...
 go get -u github.com/golang/lint/golint
-go get -u github.com/redefiance/go-find-references
+#go get -u github.com/redefiance/go-find-references
 go get -u github.com/jstemmer/gotags
 go get -u github.com/client9/misspell/cmd/misspell
-go get -u github.com/redefiance/go-find-references
 go get -u github.com/adjust/go-wrk
 go get -u github.com/uber/go-torch
 go get -u github.com/rogpeppe/godef
@@ -73,6 +73,7 @@ go get -u github.com/cweill/gotests/...
 go get -u github.com/lukehoban/go-outline
 go get -u github.com/nsf/gocode && gocode close
 go get -u github.com/ramya-rao-a/go-outline
+go get -u github.com/sourcegraph/go-langserver
 
 echo "Upgrading gometalinter linter tools used by IDEs and vim ..."
 go get -u github.com/alecthomas/gometalinter
@@ -102,8 +103,8 @@ echo "  go-fuzz             # fuzzy-input tester"
 go get -u github.com/dvyukov/go-fuzz/go-fuzz
 echo "  go-fuzz-build       # fuzzy-input tester"
 go get -u github.com/dvyukov/go-fuzz/go-fuzz-build
-echo "  hugo                # static site generator"
-go get -u github.com/spf13/hugo
+echo "  hugo                # static site generator (skipped)"
+#go get -u github.com/spf13/hugo
 echo "  godep               # dependency manager"
 go get -u github.com/tools/godep
 echo "  govendor            # dependency manager"
