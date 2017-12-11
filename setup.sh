@@ -27,6 +27,9 @@ ln -sf .dotfiles/.vim
 ln -sf .dotfiles/.vimrc
 ln -sf .dotfiles/bin
 
+# TODO: detect macOS
+#
+
 echo "Installing Homebrew"
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -42,6 +45,21 @@ echo "Setting up Golang"
 mkdir ~/.go
 mkdir -p ~/go/src ~/go/bin ~/go/pkg
 ~/bin/upgrade-go.sh
+
+#echo "Docker detected. Install and run base containers"
+#pushd ./docker
+#docker-compose up -d
+#popd
+#
+# linux (is there no package for this already?)
+#curl -L https://raw.githubusercontent.com/docker/compose/master/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
+#curl -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker > /etc/bash_completion.d/docker
+#
+# macos
+#ln -s /Applications/Docker.app/Contents/Resources/etc/docker.bash-completion /usr/local/etc/bash_completion.d/docker
+#ln -s /Applications/Docker.app/Contents/Resources/etc/docker-machine.bash-completion /usr/local/etc/bash_completion.d/docker-machine
+#ln -s /Applications/Docker.app/Contents/Resources/etc/docker-compose.bash-completion /usr/local/etc/bash_completion.d/docker-compose
+
 
 echo 
 echo "DONE"
