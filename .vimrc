@@ -383,7 +383,7 @@ function! TmuxlineSetup()
       \'a'    : '#H',
       \'b'    : '#S',
       \'win'  : ['#I', '#W'],
-      \'cwin' : ['#I', '#W', '#F'],
+      \'cwin' : ['#I', '#W'],
       \'y'    : '',
       \'z'    : ['%b %d %I:%M %p %z'] }
 endfunction
