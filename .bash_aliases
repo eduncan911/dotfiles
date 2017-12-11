@@ -58,6 +58,14 @@ function cpstat() {
   echo
 }
 
+# prefix clipboard buffer with 4 spaces (e.g. prefixing code
+# and pgp signatures in Markdown)
+function mdclipboard() {
+  if [[ $BREW_PREFIX != "" ]]; then
+    pbpaste | awk '{print "    "$0 }' | pbcopy
+  fi
+}
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
