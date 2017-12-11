@@ -145,7 +145,7 @@ __powerline() {
             if [ -n "$staging" ]; then
                 staging+="|+$sadd ~$smod -$sdel)"
             else
-                staging=" (+0 ~0 -0|+$sadd ~$smod -$sdel)"
+                staging=" (+0 ~0 -0 | +$sadd ~$smod -$sdel)"
             fi
         else
             if [ -n "$staging" ]; then
