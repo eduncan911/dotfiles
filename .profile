@@ -43,6 +43,11 @@ PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 # setup my personal bin to override all
 [[ -d "$HOME/bin" ]] && PATH="$HOME/bin:$PATH"
 
+# Android ADB
+if [ -d "$HOME/adb-fastboot/platform-tools" ] ; then
+     PATH="$HOME/adb-fastboot/platform-tools:$PATH"
+fi
+
 # since PATH was modified several times, export it here
 export PATH
 
@@ -63,6 +68,6 @@ export CDPATH
 # pretty colors
 [ -s "/usr/bin/dircolors" ] && [ -d "~/.dircolors" ] && eval `dircolors ~/.dircolors`
 
-# iterm2 for OSX integration
+# iterm2 for OSX integration. needs to be in Profile for non-interactive logins
 [[ -e "${HOME}/.iterm2_shell_integration.bash" ]] && source "${HOME}/.iterm2_shell_integration.bash"
 
