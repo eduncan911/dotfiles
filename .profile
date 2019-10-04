@@ -4,9 +4,6 @@
 # Used for things not related to bash. Environment vars, PATH and related. 
 # Should be available anytime.  Loaded by GUIs, Sublime, etc.
 
-# use gnupg2 exclusively (https://www.gnupg.org/(it)/documentation/manuals/gnupg/Common-Problems.html)
-export GPG_TTY=$(tty)
-
 # Ruby rbenv
 [[ -d "$HOME/.rbenv" ]] && PATH="$HOME/.rbenv/bin:$PATH"
 
@@ -36,37 +33,19 @@ fi
 # GO stuff
 # allows for multiple versions, diffing upgrades, downgrades and portable copies.
 # change which is in use with: ln -sfn ~/.go/go1.7.3 ~/.go/current
-GOROOT="$HOME/.go/current"; export GOROOT
-GOPATH="$HOME/go"; export GOPATH
-PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
-
-# setup my personal bin to override all
-[[ -d "$HOME/bin" ]] && PATH="$HOME/bin:$PATH"
+[[ -d "$HOME/.go" ]] && GOROOT="$HOME/.go/current"; export GOROOT; PATH="$GOROOT/bin:$PATH"
+[[ -d "$HOME/go" ]] && GOPATH="$HOME/go"; export GOPATH; PATH="$GOPATH/bin:$PATH"
 
 # Android ADB
 if [ -d "$HOME/adb-fastboot/platform-tools" ] ; then
      PATH="$HOME/adb-fastboot/platform-tools:$PATH"
 fi
 
+# setup my personal bin to override all
+[[ -d "$HOME/bin" ]] && PATH="$HOME/bin:$PATH"
+
 # since PATH was modified several times, export it here
 export PATH
-
-# setup our CDPATH
-CDPATH=:$HOME       # to output relative cd, use CDPATH=.:$HOME 
-# uncomment the below to CD to golang source files
-#[[ -z "$GOROOT" ]] && CDPATH=$CDPATH:$GOROOT/src
-#[[ -z "$GOPATH" ]] && CDPATH=$CDPATH:$GOPATH/src
-#[[ -d "$GOPATH/src/golang.org" ]]       && CDPATH=$CDPATH:$GOPATH/src/golang.org
-[[ -d "$GOPATH/src/github.com" ]]       && CDPATH=$CDPATH:$GOPATH/src/github.com
-[[ -d "$GOPATH/src/bitbucket.org" ]]    && CDPATH=$CDPATH:$GOPATH/src/bitbucket.org
-export CDPATH
-
-# setup a terminal (i3's sensible terminal)
-#TERM=xterm-256color
-#export TERM
-
-# pretty colors
-[ -s "/usr/bin/dircolors" ] && [ -d "~/.dircolors" ] && eval `dircolors ~/.dircolors`
 
 # iterm2 for OSX integration. needs to be in Profile for non-interactive logins
 [[ -e "${HOME}/.iterm2_shell_integration.bash" ]] && source "${HOME}/.iterm2_shell_integration.bash"

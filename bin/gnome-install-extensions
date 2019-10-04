@@ -1,0 +1,42 @@
+#!/bin/bash -e
+
+# A script to mass install Gnome extensions from a single folder.
+#
+# tips: http://www.ubuntubuzz.com/2017/11/how-to-install-manually-gnome-shell-extension.html
+#
+
+# for global extensions, use /usr/share/gnome-shell/extensions/
+EXTENSIONS_DIR=~/.local/share/gnome-shell/extensions
+TMP_DIR="/tmp/gnome-install-extensions"
+DIR=$1
+
+# exit early, exit often
+if [[ -z "${DIR}" ]]; then
+  echo "You must pass a directory. E.g. ${0} ~/Downloads"
+  exit 10
+fi
+
+rm -rf ${TMP_DIR}
+mkdir -p ${EXTENSIONS_DIR} ${TMP_DIR}
+pushd ${TMP_DIR} > /dev/null
+
+for f in $(ls ${DIR}/*.shell-extension.zip); do
+  fn=$(basename -- "${f}")
+  local_dir="$(basename ${fn%.*})"
+  metadata="${local_dir}/metadata.json"
+
+  cp ${f} ${TMP_DIR}/${fn}
+  unzip -qq ${fn} -d ${local_dir}
+  [[ ! -f "${metadata}" ]] && echo "${metadata} not found, skipping" && continue
+
+  # get the UUID to name
+  name=$(grep -E "uuid" ${metadata} | sed 's/\"uuid\"\: \"//g' | sed 's/\",//g' )
+  # gnome extension dirs must name the uuid name in metadata.json above
+  mv ${local_dir} ${name}
+  rm ${fn}
+  rsync -a --remove-source-files * ${EXTENSIONS_DIR}/
+done
+
+popd > /dev/null
+rm -rf ${TMP_DIR}
+echo ""

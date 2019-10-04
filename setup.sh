@@ -27,6 +27,10 @@ ln -sf .dotfiles/.vim
 ln -sf .dotfiles/.vimrc
 ln -sf .dotfiles/bin
 
+# setup tmux and neovim
+git submodule init && git submodule update
+ln -sf ~/.dotfiles/.vim ~/.config/nvim
+
 # TODO: detect macOS
 #
 

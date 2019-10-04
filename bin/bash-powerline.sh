@@ -112,18 +112,23 @@ __powerline() {
     }
 
     __git_info() { 
-        [ -x "$(which git)" ] || return    # git not found
+        [ "$(hash git 2>/dev/null)" ] && return    # git not found
 
         local git_eng="env LANG=C git"   # force git output in English to make our work easier
-        # get current branch name or short SHA1 hash for detached head
+
+        # get current branch name or short SHA1 hash for detached head.
+        # this should be our only external process in this func.
         local branch="$($git_eng symbolic-ref --short HEAD 2>/dev/null || $git_eng describe --tags --always 2>/dev/null)"
         [ -n "$branch" ] || return  # git branch not found
 
         local marks
         local bgcolor="$BG_CYAN"
         local status="$($git_eng status --porcelain --branch)"
-        
+
         # branch is modified?
+        #
+        # TODO: use bash built-ins and get rid of echo to speed this up
+        #
         local modified=$(echo "$status" | wc -l)
         if [ "$modified" -ne 1 ]; then
         #    marks+=" $GIT_BRANCH_CHANGED_SYMBOL"
@@ -131,6 +136,9 @@ __powerline() {
         fi
 
         # do we have anything unstaged or staged
+        #
+        # TODO: use bash built-ins and get rid of grep to speed this up
+        #
         local staging
         local uadd=$(grep -c '^??' <<< "$status")
         local umod=$(grep -c '^ M' <<< "$status")
@@ -154,14 +162,21 @@ __powerline() {
         fi
  
         # do we have any stashes?
+        #
+        # TODO: use an env var to signal rather we should lookup stashes
+        # or not because, well, this is slow as frack.  maybe there's a
+        # .git/<file> we can lookup instead?
+        #
         local stashed
         local stash="$($git_eng stash list | wc -l)"
         if [ "$stash" != 0 ]; then
-            #marks+=" $GIT_STASHED_SYMBOL"
-            stashed=" [$stash]"
+            stashed=" [$stash]$GIT_BRANCH_CHANGED_SYMBOL"
         fi
 
         # how many commits local branch is ahead/behind of remote?
+        #
+        # TODO: use bash built-ins instead of echo and grep to speed this up
+        #
         local bstatus=$(echo "$status" | grep '^##' | grep -o '\[.\+\]$')
         local aheadN=$(echo "$bstatus" | grep -o 'ahead [[:digit:]]\+' | grep -o '[[:digit:]]\+')
         local behindN=$(echo "$bstatus" | grep -o 'behind [[:digit:]]\+' | grep -o '[[:digit:]]\+')
@@ -192,8 +207,8 @@ __powerline() {
         #PS1="$FG_BASE3$BG_YELLOW YELLOW $BG_ORANGE ORANGE $BG_RED RED $BG_MAGENTA MAGENTA $BG_VIOLET VIOLET $BG_BLUE BLUE $BG_CYAN CYAN $BG_GREEN GREEN $RESET\n\n\n"
         PS1="$BG_MAGENTA$FG_BASE02$(__virtualenv_info)$RESET"
         PS1+="$BG_VIOLET$FG_BASE02$(__rbenv_info)$RESET"
-        PS1+="$BG_BASE03$FG_BASE2 \u@\h $RESET"
-        PS1+="$BG_BASE2$FG_BASE03 $(__pwd_info2) $RESET"
+        PS1+="$BG_BASE2$FG_BASE03 \u@\h $RESET"
+        PS1+="$BG_BASE2$FG_BASE03$(__pwd_info2) $RESET"
         PS1+="$FG_BASE02$(__git_info)$RESET"
         #PS1+="$BG_YELLOW$FG_BASE3 $PS_SYMBOL $RESET"
         PS1+="$BG_EXIT"

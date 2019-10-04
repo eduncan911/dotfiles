@@ -13,9 +13,10 @@ alias grep='grep --color=auto --exclude-dir=\.git --exclude-dir=\.svn --exclude-
 
 # enable color support of ls and also add handy aliases
 # this requires the coreutils system package installed (for dircolors)
+#
 type dircolors >/dev/null 2>&1 && DIRCOLORS=1
 if [ -n $DIRCOLORS ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  test -r ~/.dircolors && eval `dircolors -b ~/.dircolors`
   alias ls='ls --color=auto'
   alias dir='dir --color=auto'
   alias vdir='vdir --color=auto'
@@ -83,5 +84,5 @@ alias docker-clean-everything='\
     docker rm -v $(docker ps -a -q -f status=exited);\
     docker rmi -f $(docker images -q);\
     docker volume rm -f $(docker volume ls | awk "{print $2}");\
-    docker network rm -f $(docker network ls | awk "{print $2}")'
+    docker network rm $(docker network ls | awk "{print $2}")'
 

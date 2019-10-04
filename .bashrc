@@ -8,8 +8,9 @@
 
 # modify bash behavior
 #
-# requires homebrew's bash on macos.  configure your bash with:
+# macos: requires homebrew's bash.  configure your bash with:
 # https://johndjameson.com/blog/updating-your-shell-with-homebrew/
+#
 shopt -s histappend
 shopt -s checkwinsize
 shopt -s cdspell
@@ -21,6 +22,7 @@ shopt -s dotglob
 # history: setting to unlimited
 # HISTCONTROL=erasedups" to cleanup any existing history (note, can be slow)
 # ignoreboth = ignorespace:ignoredups
+#
 HISTCONTROL=ignoreboth
 HISTIGNORE="pwd:exit"
 HISTFILESIZE=
@@ -33,32 +35,48 @@ LC_COLLATE="C"; export LC_COLLATE
 
 # if we have neovim, set the default editor to that
 if [[ -x "nvim" ]]; then
-	export VISUAL=nvim
-else
-    export VISUAL=vim
+  export VISUAL=nvim; EDITOR="$VISUAL"
+elif [[ -x "vim" ]]; then
+  export VISUAL=vim; EDITOR="$VISUAL"
+elif [[ -x "nano" ]]; then
+  export VISUAL=nano; EDITOR="$VISUAL"
 fi
-export EDITOR="$VISUAL"
 
+# setup a color terminal
+TERM=screen-256color; export TERM
+
+# use tty prompt for all gnupg2 exclusively
+export GPG_TTY=$(tty)
+
+# setup our CDPATH
+CDPATH=:$HOME       # to output relative cd, use CDPATH=.:$HOME 
+# uncomment the below to CD to golang source files
+#[[ -z "$GOROOT" ]] && CDPATH=$CDPATH:$GOROOT/src
+#[[ -z "$GOPATH" ]] && CDPATH=$CDPATH:$GOPATH/src
+#[[ -d "$GOPATH/src/golang.org" ]]       && CDPATH=$CDPATH:$GOPATH/src/golang.org
+[[ -d "$GOPATH/src/github.com" ]]       && CDPATH=$CDPATH:$GOPATH/src/github.com
+[[ -d "$GOPATH/src/bitbucket.org" ]]    && CDPATH=$CDPATH:$GOPATH/src/bitbucket.org
+export CDPATH
 
 # source scripts
-[[ -x "~/.bash_aliases" ]]                              && source ~/.bash_aliases                               # enable bash aliases
-[[ -x "/usr/share/bash-completion/bash_completion" ]]   && source /usr/share/bash-completion/bash_completion    # bash completion
-[[ -x "${BREW_PREFIX}/etc/bash_completion" ]]           && source "${BREW_PREFIX}/etc/bash_completion"          # bash completion
-[[ -x "/usr/bin/lesspipe" ]]                            && eval "$(SHELL=/bin/sh lesspipe)"                     # less for non-text files
-[[ -x "/usr/bin/virtualenvwrapper.sh" ]]                && source /usr/bin/virtualenvwrapper.sh                 # Python VirtualEnvWrapper (linux)
-[[ -x "/usr/local/bin/virtualenvwrapper.sh" ]]          && source /usr/local/bin/virtualenvwrapper.sh           # Python VirtualEnvWrapper (macos)
+[[ -x "${HOME}/.bash_aliases" ]]                        && source ${HOME}/.bash_aliases                         # enable bash aliases
 [[ -d "${HOME}/.rbenv" ]]                               && eval "$(rbenv init -)"	                            # Ruby rbenv
 [[ -x "${HOME}/.aws-tools/aws.sh" ]]                    && source "${HOME}/.aws-tools/aws.sh"                   # AWS custom scripting
-[[ -x "/usr/local/bin/aws_completer" ]]                 && complete -C aws_completer aws                        # AWS autocompletion (macos)
 [[ -x "${HOME}/.iterm2_shell_integration.bash" ]]       && source "${HOME}/.iterm2_shell_integration.bash"      # iterm2 shell integration (macos)
 [[ -x "${HOME}/.profile.private" ]]                     && source "${HOME}/.profile.private"                    # homebrew api token
 [[ -x "${HOME}/bin/bash-powerline.sh" ]]                && source "${HOME}/bin/bash-powerline.sh"               # PROMPT
+[[ -x "${BREW_PREFIX}/etc/bash_completion" ]]           && source "${BREW_PREFIX}/etc/bash_completion"          # bash completion
+[[ -x "/usr/share/bash-completion/bash_completion" ]]   && source /usr/share/bash-completion/bash_completion    # bash completion
+[[ -x "/usr/bin/lesspipe" ]]                            && eval "$(SHELL=/bin/sh lesspipe)"                     # less for non-text files
+[[ -x "/usr/bin/virtualenvwrapper.sh" ]]                && source /usr/bin/virtualenvwrapper.sh                 # Python VirtualEnvWrapper (linux)
+[[ -x "/usr/local/bin/virtualenvwrapper.sh" ]]          && source /usr/local/bin/virtualenvwrapper.sh           # Python VirtualEnvWrapper (macos)
+[[ -x "/usr/local/bin/aws_completer" ]]                 && complete -C aws_completer aws                        # AWS autocompletion (macos)
 
 # todo-txt
 if [[ -x "${HOME}/bin/todo_completion" ]]; then
-	source "${HOME}/bin/todo_completion"
-	complete -F _todo t
-	export TODOTXT_DEFAULT_ACTION=ls 	# list tasks with just "t"
-	export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n' 	# sort by priority, then by number
+  source "${HOME}/bin/todo_completion"
+  complete -F _todo t
+  export TODOTXT_DEFAULT_ACTION=ls 	# list tasks with just "t"
+  export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n' 	# sort by priority, then by number
 fi
 
