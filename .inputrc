@@ -12,3 +12,8 @@ set show-all-if-ambiguous on
 Tab:complete
 "\e[Z":menu-complete
 #"\e[Z":menu-complete-backward
+
+# add up/down arrows to reverse search
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
