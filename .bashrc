@@ -59,21 +59,22 @@ CDPATH=:$HOME       # to output relative cd, use CDPATH=.:$HOME
 export CDPATH
 
 # source scripts
-[[ -x "${HOME}/.bash_aliases" ]]                        && source ${HOME}/.bash_aliases                         # enable bash aliases
-[[ -d "${HOME}/.rbenv" ]]                               && eval "$(rbenv init -)"	                            # Ruby rbenv
-[[ -x "${HOME}/.aws-tools/aws.sh" ]]                    && source "${HOME}/.aws-tools/aws.sh"                   # AWS custom scripting
-[[ -x "${HOME}/.iterm2_shell_integration.bash" ]]       && source "${HOME}/.iterm2_shell_integration.bash"      # iterm2 shell integration (macos)
-[[ -x "${HOME}/.profile.private" ]]                     && source "${HOME}/.profile.private"                    # homebrew api token
-[[ -x "${HOME}/bin/bash-powerline.sh" ]]                && source "${HOME}/bin/bash-powerline.sh"               # PROMPT
-[[ -x "${BREW_PREFIX}/etc/bash_completion" ]]           && source "${BREW_PREFIX}/etc/bash_completion"          # bash completion
-[[ -x "/usr/share/bash-completion/bash_completion" ]]   && source /usr/share/bash-completion/bash_completion    # bash completion
-[[ -x "/usr/bin/lesspipe" ]]                            && eval "$(SHELL=/bin/sh lesspipe)"                     # less for non-text files
-[[ -x "/usr/bin/virtualenvwrapper.sh" ]]                && source /usr/bin/virtualenvwrapper.sh                 # Python VirtualEnvWrapper (linux)
-[[ -x "/usr/local/bin/virtualenvwrapper.sh" ]]          && source /usr/local/bin/virtualenvwrapper.sh           # Python VirtualEnvWrapper (macos)
-[[ -x "/usr/local/bin/aws_completer" ]]                 && complete -C aws_completer aws                        # AWS autocompletion (macos)
+[[ -f "${HOME}/.bash_aliases" ]]                            && source ${HOME}/.bash_aliases
+[[ -d "${HOME}/.rbenv" ]]                                   && eval "$(rbenv init -)"
+[[ -f "${HOME}/.aws-tools/aws.sh" ]]                        && source "${HOME}/.aws-tools/aws.sh"
+[[ -f "${HOME}/.iterm2_shell_integration.bash" ]]           && source "${HOME}/.iterm2_shell_integration.bash"
+[[ -f "${HOME}/.profile.private" ]]                         && source "${HOME}/.profile.private"
+[[ -f "${HOME}/bin/bash-powerline.sh" ]]                    && source "${HOME}/bin/bash-powerline.sh"
+[[ -x "${BREW_PREFIX}/etc/bash_completion" ]]               && source "${BREW_PREFIX}/etc/bash_completion"
+[[ -x "/usr/bin/lesspipe" ]]                                && eval "$(SHELL=/bin/sh lesspipe)"
+[[ -f "/usr/bin/virtualenvwrapper.sh" ]]                    && source /usr/bin/virtualenvwrapper.sh
+[[ -f "/usr/share/bash-completion/bash_completion" ]]       && source /usr/share/bash-completion/bash_completion
+[[ -f "/usr/local/share/bash-completion/bash_completion" ]] && source /usr/local/share/bash-completion/bash_completion
+[[ -f "/usr/local/bin/virtualenvwrapper.sh" ]]              && source /usr/local/bin/virtualenvwrapper.sh
+[[ -x "/usr/local/bin/aws_completer" ]]                     && complete -C /usr/local/bin/aws_completer aws
 
 # todo-txt
-if [[ -x "${HOME}/bin/todo_completion" ]]; then
+if [[ -f "${HOME}/bin/todo_completion" ]]; then
   source "${HOME}/bin/todo_completion"
   complete -F _todo t
   export TODOTXT_DEFAULT_ACTION=ls 	# list tasks with just "t"
