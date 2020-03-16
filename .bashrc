@@ -55,7 +55,7 @@ CDPATH=:$HOME       # to output relative cd, use CDPATH=.:$HOME
 #[[ -z "$GOPATH" ]] && CDPATH=$CDPATH:$GOPATH/src
 #[[ -d "$GOPATH/src/golang.org" ]]       && CDPATH=$CDPATH:$GOPATH/src/golang.org
 [[ -d "$GOPATH/src/github.com" ]]       && CDPATH=$CDPATH:$GOPATH/src/github.com
-[[ -d "$GOPATH/src/bitbucket.org" ]]    && CDPATH=$CDPATH:$GOPATH/src/bitbucket.org
+#[[ -d "$GOPATH/src/bitbucket.org" ]]    && CDPATH=$CDPATH:$GOPATH/src/bitbucket.org
 export CDPATH
 
 # source scripts
@@ -65,7 +65,7 @@ export CDPATH
 [[ -f "${HOME}/.iterm2_shell_integration.bash" ]]           && source "${HOME}/.iterm2_shell_integration.bash"
 [[ -f "${HOME}/.profile.private" ]]                         && source "${HOME}/.profile.private"
 [[ -f "${HOME}/bin/bash-powerline.sh" ]]                    && source "${HOME}/bin/bash-powerline.sh"
-[[ -x "${BREW_PREFIX}/etc/bash_completion" ]]               && source "${BREW_PREFIX}/etc/bash_completion"
+[[ -f "${BREW_PREFIX}/etc/bash_completion" ]]               && source "${BREW_PREFIX}/etc/bash_completion"
 [[ -x "/usr/bin/lesspipe" ]]                                && eval "$(SHELL=/bin/sh lesspipe)"
 [[ -f "/usr/bin/virtualenvwrapper.sh" ]]                    && source /usr/bin/virtualenvwrapper.sh
 [[ -f "/usr/share/bash-completion/bash_completion" ]]       && source /usr/share/bash-completion/bash_completion
