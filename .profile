@@ -33,8 +33,16 @@ fi
 # GO stuff
 # allows for multiple versions, diffing upgrades, downgrades and portable copies.
 # change which is in use with: ln -sfn ~/.go/go1.7.3 ~/.go/current
-[[ -d "$HOME/.go" ]] && GOROOT="$HOME/.go/current"; export GOROOT; PATH="$GOROOT/bin:$PATH"
-[[ -d "$HOME/go" ]] && GOPATH="$HOME/go"; export GOPATH; PATH="$GOPATH/bin:$PATH"
+if [[ -d "$HOME/.go" ]]; then
+  GOROOT="$HOME/.go/current"
+  export GOROOT
+  PATH="$GOROOT/bin:$PATH"
+fi
+if [[ -d "$HOME/go" ]]; then
+  GOPATH="$HOME/go"
+  export GOPATH
+  PATH="$GOPATH/bin:$PATH"
+fi
 
 # Android ADB
 if [ -d "$HOME/adb-fastboot/platform-tools" ] ; then
