@@ -19,14 +19,25 @@ fi
 if [ -x /usr/local/bin/brew ]; then
   BREW_PREFIX="$(brew --prefix)"
   export BREW_PREFIX
+  HOMEBREW_NO_AUTO_UPDATE=1
+  export HOMEBREW_NO_AUTO_UPDATE
 fi
 
 # GNU coreutils overriding OS X natives
 if [[ $BREW_PREFIX != "" ]]; then
+  # handle most utils
   BREW_COREUTILS=$(brew --prefix coreutils) > /dev/null 2>&1
   if [ -n $BREW_COREUTILS ]; then
-    PATH="$BREW_COREUTILS/libexec/gnubin:/usr/local/bin:/usr/local/sbin:$PATH"
+    PATH="$BREW_COREUTILS/libexec/gnubin:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH"
     MANPATH="$BREW_COREUTILS/libexec/gnuman:$MANPATH"
+  fi
+  # sed
+  if [[ -d "$BREW_PREFIX/opt/gnu-sed/libexec/gnubin/" ]]; then
+    PATH="$BREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH"
+  fi
+  # grep
+  if [[ -d "$BREW_PREFIX/opt/grep/libexec/gnubin/" ]]; then
+    PATH="$BREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
   fi
 fi
 
