@@ -22,3 +22,4 @@
     cleanup = "!git branch --merged | grep -v '\\*\\|master|develop|dev' | xargs -n 1 git branch -d"
     sshow = "!f() { git stash show stash^{/$*} -p; }; f"
     sapply = "!f() { git stash apply stash^{/$*}; }; f"
+    new = checkout -b
