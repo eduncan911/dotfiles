@@ -15,8 +15,8 @@ function _upgrade_go_binary {
         echo "Skipping Go binary upgrade (no version found)."
         return
     fi
-    if [[ -d "~/.go/$GO_LATEST_VERSION" ]]; then
-        echo "Lastest version of Go already installed, skipping upgrade."
+    if [[ -d "$HOME/.go/$GO_LATEST_VERSION" ]]; then
+        echo "go version $GO_LATEST_VERSION already installed, skipping upgrade."
         return
     fi
 
@@ -26,22 +26,22 @@ function _upgrade_go_binary {
     # compatible with Linux and Darwin (maybe windows too)
     local GO_LATEST_FILENAME="$GO_LATEST_VERSION.$(uname -s | \
         tr '[:upper:]' '[:lower:]')-amd64.tar.gz"
-    echo "Downloading $GO_LATEST_FILENAME to ~/.go/$GO_LATEST_FILENAME"
-    wget -q https://dl.google.com/go/$GO_LATEST_FILENAME -O ~/.go/$GO_LATEST_FILENAME
+    echo "Downloading $GO_LATEST_FILENAME to $HOME/.go/$GO_LATEST_FILENAME"
+    wget -q https://dl.google.com/go/$GO_LATEST_FILENAME -O $HOME/.go/$GO_LATEST_FILENAME
 
-    echo "Installing $GO_LATEST_FILENAME" 
-    cd ~/.go
+    echo "Installing $GO_LATEST_FILENAME into $HOME/.go/$GO_LATEST_VERSION" 
+    cd $HOME/.go
     tar zxf $GO_LATEST_FILENAME
     rm $GO_LATEST_FILENAME
     mv go $GO_LATEST_VERSION
-    ln -sfn ~/.go/$GO_LATEST_VERSION ~/.go/current
+    ln -sfn $HOME/.go/$GO_LATEST_VERSION $HOME/.go/current
 
     go version
 }
-if [[ -d ~/.go ]]; then 
+if [[ -d $HOME/.go ]]; then 
     _upgrade_go_binary
 else
-    echo "No custom ~/.go/ detected.  Using system installed version."
+    echo "No custom $HOME/.go/ detected.  Using system installed version."
 fi
 unset _upgrade_go_binary
 
@@ -70,8 +70,8 @@ printf "# github.com/cweill/gotests/...\n"
 go get -u github.com/cweill/gotests/...
 printf "# github.com/lukehoban/go-outline\n"
 go get -u github.com/lukehoban/go-outline
-printf "# github.com/nsf/gocode && gocode close\n"
-go get -u github.com/nsf/gocode && gocode close
+#printf "# github.com/nsf/gocode && gocode close\n"
+#go get -u github.com/nsf/gocode && gocode close
 printf "# github.com/ramya-rao-a/go-outline\n"
 go get -u github.com/ramya-rao-a/go-outline
 printf "# github.com/sourcegraph/go-langserver\n"
@@ -84,8 +84,8 @@ echo "Upgrading vim-go binaries ..."
 vim +GoUpdateBinaries +qall
 
 echo "Upgrade personal utilities built with Go ..."
-echo "  godoc2ghmd          # converts go docs to GitHub README.md markdown"
-go get -u github.com/eduncan911/godoc2ghmd
+#echo "  godoc2ghmd          # converts go docs to GitHub README.md markdown"
+#go get -u github.com/eduncan911/godoc2ghmd
 echo "  gostatus            # checks status of packages in GOPATH"
 go get -u github.com/shurcooL/gostatus
 echo "  gofresh             # checks status of packages in GOPATH"
