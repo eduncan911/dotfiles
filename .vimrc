@@ -20,7 +20,13 @@ call plug#begin('~/.vim/plugged')
     \ | Plug 'vim-airline/vim-airline-themes'
     \ | Plug 'altercation/vim-colors-solarized'
     \ | Plug 'robertmeta/nofrils'
-  Plug 'flazz/vim-colorschemes'
+
+  " colorschemes and themes
+  " Plug 'flazz/vim-colorschemes'              " abandoned project
+  Plug 'morhetz/gruvbox'
+  Plug 'sainnhe/gruvbox-material'
+  Plug 'i3d/vim-jimbothemes'
+
   Plug 'moll/vim-bbye'                         " :Bdelete :Bd to close buffer
 
   " dev plugins
@@ -279,7 +285,26 @@ function! ColorSchemeSetup()
 
   " solarized benokai 256-grayvim 256-jungle 256_noir Monokai solarized
   " nofrils-dark nofris-light
-  colorscheme Monokai
+  " colorscheme Monokai
+  " colorscheme gruvbox
+
+  "if has('termguicolors')
+  "  set termguicolors
+  "endif
+
+  " gruvbox
+  set background=dark
+  let g:gruvbox_transparent_bg = '1'
+  let g:gruvbox_contrast_light = 'medium'   " soft, medium, hard
+  let g:gruvbox_contrast_dark = 'soft'      " soft, medium, hard
+  
+  "set background=dark " dark, light
+  let g:gruvbox_material_background = 'soft' " soft, medium, hard
+  "colorscheme gruvbox-material
+
+  "set background=dark   " all jimbothemes are dark background themes
+  "colorscheme breakingbad      " pick the color theme you like
+  autocmd vimenter * ++nested colorscheme gruvbox-material
 endfunction
 
 function! TagbarSetup()
