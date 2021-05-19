@@ -56,9 +56,12 @@ if [[ -d "$HOME/go" ]]; then
 fi
 
 # Android ADB
-if [ -d "$HOME/adb-fastboot/platform-tools" ] ; then
+if [[ -d "$HOME/adb-fastboot/platform-tools" ]] ; then
      PATH="$HOME/adb-fastboot/platform-tools:$PATH"
 fi
+
+# package bins (linux only)
+[[ -d "$HOME/.local/bin" ]] && PATH="$HOME/.local/bin:$PATH"
 
 # setup my personal bin to override all
 [[ -d "$HOME/bin" ]] && PATH="$HOME/bin:$PATH"
