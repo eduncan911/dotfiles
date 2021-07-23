@@ -49,7 +49,7 @@ TERM=screen-256color; export TERM
 export GPG_TTY=$(tty)
 
 # setup our CDPATH
-CDPATH=:$HOME       # to output relative cd, use CDPATH=.:$HOME 
+CDPATH=:${HOME}       # to output relative cd, use CDPATH=.:${HOME}
 # uncomment the below to CD to golang source files
 #[[ -z "$GOROOT" ]] && CDPATH=$CDPATH:$GOROOT/src
 #[[ -z "$GOPATH" ]] && CDPATH=$CDPATH:$GOPATH/src
@@ -87,4 +87,3 @@ if [[ -f "${HOME}/bin/todo_completion" ]]; then
   export TODOTXT_DEFAULT_ACTION=ls 	# list tasks with just "t"
   export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n' 	# sort by priority, then by number
 fi
-

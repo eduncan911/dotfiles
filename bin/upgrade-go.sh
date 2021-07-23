@@ -3,7 +3,7 @@ set -o errexit
 
 # WARNING: while this script should be safe to run on normal Go installs, it will
 # only upgrade the Go binaries of a special non-standard path - that I use on my
-# machines.  basially, the Go binary upgrade script performs a non-standard 
+# machines.  basially, the Go binary upgrade script performs a non-standard
 # installation of GoLang.  it places the go binaries in:
 #
 #   ~/.go/      # note the leading "." hidden directive.
@@ -15,7 +15,7 @@ function _upgrade_go_binary {
         echo "Skipping Go binary upgrade (no version found)."
         return
     fi
-    if [[ -d "$HOME/.go/$GO_LATEST_VERSION" ]]; then
+    if [[ -d "${HOME}/.go/$GO_LATEST_VERSION" ]]; then
         echo "go version $GO_LATEST_VERSION already installed, skipping upgrade."
         return
     fi
@@ -26,22 +26,22 @@ function _upgrade_go_binary {
     # compatible with Linux and Darwin (maybe windows too)
     local GO_LATEST_FILENAME="$GO_LATEST_VERSION.$(uname -s | \
         tr '[:upper:]' '[:lower:]')-amd64.tar.gz"
-    echo "Downloading $GO_LATEST_FILENAME to $HOME/.go/$GO_LATEST_FILENAME"
-    wget -q https://dl.google.com/go/$GO_LATEST_FILENAME -O $HOME/.go/$GO_LATEST_FILENAME
+    echo "Downloading $GO_LATEST_FILENAME to ${HOME}/.go/$GO_LATEST_FILENAME"
+    wget -q https://dl.google.com/go/$GO_LATEST_FILENAME -O ${HOME}/.go/$GO_LATEST_FILENAME
 
-    echo "Installing $GO_LATEST_FILENAME into $HOME/.go/$GO_LATEST_VERSION" 
-    cd $HOME/.go
+    echo "Installing $GO_LATEST_FILENAME into ${HOME}/.go/$GO_LATEST_VERSION"
+    cd ${HOME}/.go
     tar zxf $GO_LATEST_FILENAME
     rm $GO_LATEST_FILENAME
     mv go $GO_LATEST_VERSION
-    ln -sfn $HOME/.go/$GO_LATEST_VERSION $HOME/.go/current
+    ln -sfn ${HOME}/.go/$GO_LATEST_VERSION ${HOME}/.go/current
 
     go version
 }
-if [[ -d $HOME/.go ]]; then 
+if [[ -d ${HOME}/.go ]]; then
     _upgrade_go_binary
 else
-    echo "No custom $HOME/.go/ detected.  Using system installed version."
+    echo "No custom ${HOME}/.go/ detected.  Using system installed version."
 fi
 unset _upgrade_go_binary
 
