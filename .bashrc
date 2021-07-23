@@ -73,6 +73,13 @@ export CDPATH
 [[ -f "/usr/local/bin/virtualenvwrapper.sh" ]]              && source /usr/local/bin/virtualenvwrapper.sh
 [[ -x "/usr/local/bin/aws_completer" ]]                     && complete -C /usr/local/bin/aws_completer aws
 
+# nodejs's NVM
+if [[ -f "${HOME}/.nvm/nvm.sh" ]]; then
+  export NVM_DIR="${HOME}/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+
 # todo-txt
 if [[ -f "${HOME}/bin/todo_completion" ]]; then
   source "${HOME}/bin/todo_completion"

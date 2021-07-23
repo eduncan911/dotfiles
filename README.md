@@ -51,7 +51,7 @@ functionality that enables me to `clone->link->use` quickly.
 
 There's a lot and it is ever changing.  But a short list:
 
-* primarily for `docker` & `golang` along with `ruby`, `python` and more  
+* primarily for `docker` & `golang`, `ruby`, `python`, `node`, etc 
 * conditional setup scripts (e.g. won't load `rbenv` unless it exists)
 * proper `bash` dotfiles ordering (bashrc, profile, bash_aliases, etc)
 * `bash` unlimited history and behavior to my liking 
@@ -81,10 +81,6 @@ $ ln -s .dotfiles/.profile
 $ ln -s .dotfiles/bin
 ...and so on
 ```
-
-There's also a `setup.sh` I am starting to populate as I build out new 
-machines to cut down on the setup time.  It's not finished yet; but, 
-you can evaluate how one would use this repo by viewing that file.
 
 # Why post it online if it is only for you?
 
