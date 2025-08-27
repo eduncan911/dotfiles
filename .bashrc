@@ -34,11 +34,11 @@ HISTFILE=~/.bash_history_unlimited
 LC_COLLATE="C"; export LC_COLLATE
 
 # if we have neovim, set the default editor to that
-if [[ -x "nvim" ]]; then
+if which nvim >/dev/null 2>&1; then
   export VISUAL=nvim; EDITOR="$VISUAL"
-elif [[ -x "vim" ]]; then
+elif which vim >/dev/null 2>&1; then
   export VISUAL=vim; EDITOR="$VISUAL"
-elif [[ -x "nano" ]]; then
+elif which nano >/dev/null 2>&1; then
   export VISUAL=nano; EDITOR="$VISUAL"
 fi
 
@@ -63,14 +63,13 @@ export CDPATH
 [[ -d "${HOME}/.rbenv" ]]                                   && eval "$(rbenv init -)"
 [[ -f "${HOME}/.aws-tools/aws.sh" ]]                        && source "${HOME}/.aws-tools/aws.sh"
 [[ -f "${HOME}/.iterm2_shell_integration.bash" ]]           && source "${HOME}/.iterm2_shell_integration.bash"
-[[ -f "${HOME}/.profile.private" ]]                         && source "${HOME}/.profile.private"
 [[ -f "${HOME}/bin/bash-powerline.sh" ]]                    && source "${HOME}/bin/bash-powerline.sh"
 [[ -f "${BREW_PREFIX}/etc/bash_completion" ]]               && source "${BREW_PREFIX}/etc/bash_completion"
 [[ -x "/usr/bin/lesspipe" ]]                                && eval "$(SHELL=/bin/sh lesspipe)"
-[[ -f "/usr/bin/virtualenvwrapper.sh" ]]                    && source /usr/bin/virtualenvwrapper.sh
+[[ -f "/usr/bin/virtualenvwrapper_lazy.sh" ]]                    && source /usr/bin/virtualenvwrapper_lazy.sh
 [[ -f "/usr/share/bash-completion/bash_completion" ]]       && source /usr/share/bash-completion/bash_completion
 [[ -f "/usr/local/share/bash-completion/bash_completion" ]] && source /usr/local/share/bash-completion/bash_completion
-[[ -f "/usr/local/bin/virtualenvwrapper.sh" ]]              && source /usr/local/bin/virtualenvwrapper.sh
+[[ -f "/usr/local/bin/virtualenvwrapper_lazy.sh" ]]              && source /usr/local/bin/virtualenvwrapper_lazy.sh
 [[ -x "/usr/local/bin/aws_completer" ]]                     && complete -C /usr/local/bin/aws_completer aws
 
 # nodejs's NVM
@@ -80,10 +79,5 @@ if [[ -f "${HOME}/.nvm/nvm.sh" ]]; then
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
-# todo-txt
-if [[ -f "${HOME}/bin/todo_completion" ]]; then
-  source "${HOME}/bin/todo_completion"
-  complete -F _todo t
-  export TODOTXT_DEFAULT_ACTION=ls 	# list tasks with just "t"
-  export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n' 	# sort by priority, then by number
-fi
+# not under version control
+[[ -f "${HOME}/.profile.private" ]]                         && source "${HOME}/.profile.private"
