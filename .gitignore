@@ -1,3 +1,4 @@
 .vscode
+/.tmux/plugins
 .AppleDouble
 .DS_Store
