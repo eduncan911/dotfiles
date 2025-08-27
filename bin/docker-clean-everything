@@ -1,0 +1,5 @@
+docker rm -v $(docker ps -a -q -f status=exited)
+docker rmi -f $(docker images -q)
+docker volume rm -f $(docker volume ls | awk "{print $2}")
+docker network rm $(docker network ls | awk "{print $2}")
+
