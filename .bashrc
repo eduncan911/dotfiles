@@ -59,7 +59,7 @@ CDPATH=:${HOME}       # to output relative cd, use CDPATH=.:${HOME}
 export CDPATH
 
 # source scripts
-[[ -f "${HOME}/.bash_aliases" ]]                            && source ${HOME}/.bash_aliases
+[[ -f "${HOME}/.aliases" ]]                                 && source ${HOME}/.aliases
 [[ -d "${HOME}/.rbenv" ]]                                   && eval "$(rbenv init -)"
 [[ -f "${HOME}/.aws-tools/aws.sh" ]]                        && source "${HOME}/.aws-tools/aws.sh"
 [[ -f "${HOME}/.iterm2_shell_integration.bash" ]]           && source "${HOME}/.iterm2_shell_integration.bash"
