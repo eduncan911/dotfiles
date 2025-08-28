@@ -37,6 +37,7 @@ compatibility across:
 * Linux (non-BSD, mostly ArchLinux, Debian and Ubuntu)
 * Darwin (macOS)
 * Raspberry Pi operating systems (Pixel, NOOB, debian/arch based)
+* both ZSH and BASH
 
 Linux for Windows Subsystem version 2 is seems to have fixed most of the
 TTL issues. If I ever get a Windows machine at home, I'll install this
@@ -53,6 +54,7 @@ There's a lot and it is ever changing.  But a short list:
 
 * primarily for `docker` & `golang`, `ruby`, `python`, `node`, etc 
 * conditional setup scripts (e.g. won't load `rbenv` unless it exists)
+* `zsh` standard enhancements 
 * proper `bash` dotfiles ordering (bashrc, profile, bash_aliases, etc)
 * `bash` unlimited history and behavior to my liking 
 * my own high-speed custom prompt (almost down to just 1 shell exec!)
