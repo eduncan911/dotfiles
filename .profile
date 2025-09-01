@@ -57,6 +57,7 @@ if [ -d "${HOME}/go" ]; then
   export GOPATH
   PATH="$GOPATH/bin:$PATH"
 fi
+export FLATPAK_ENABLE_SDK_EXT=golang
 
 # Android ADB
 if [ -d "${HOME}/adb-fastboot/platform-tools" ] ; then
@@ -71,10 +72,3 @@ fi
 
 # since PATH was modified several times, export it here
 export PATH
-
-# iterm2 integration - detect shell type
-if [ -n "$BASH_VERSION" ] && [ -e "${HOME}/.iterm2_shell_integration.bash" ]; then
-  source "${HOME}/.iterm2_shell_integration.bash"
-elif [ -n "$ZSH_VERSION" ] && [ -e "${HOME}/.iterm2_shell_integration.zsh" ]; then
-  source "${HOME}/.iterm2_shell_integration.zsh"
-fi
